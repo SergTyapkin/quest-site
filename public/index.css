@@ -1,0 +1,163 @@
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    color: #fff;
+    background: linear-gradient(-20deg, #b8860b 0%, #000000 70%) no-repeat;
+    background-size: 10000%;
+    animation: load-out 3s ease normal forwards;
+}
+
+@keyframes load-in {
+    from {
+        background-position: 0;
+        background-size: 10000%;
+    }
+    to {
+        background-position: 100%;
+        background-size: 1000%;
+    }
+}
+@keyframes load-out {
+    from {
+        background-position: 100%;
+        background-size: 1000%;
+    }
+    to {
+        background-position: 0%;
+        background-size: 300%;
+    }
+}
+linkButton {
+    cursor: pointer;
+}
+#navbar {
+    border-bottom-left-radius: 100px 60px;
+    border-bottom-right-radius: 100px 60px;
+    height: 60px;
+    list-style: none;
+    margin: 0 auto 10px auto;
+    padding: 0;
+    text-align: center;
+    background: linear-gradient(20deg, rgba(84, 67, 24, 0) 0%, rgba(84, 67, 24, 0.6) 50%, rgba(84, 67, 24, 0) 100%);
+    position: relative;
+    width: 80%;
+    clip-path: fill-box;
+    overflow: hidden;
+    box-shadow: 0 0 30px 0 rgba(17, 12, 1, 1) inset, rgba(231, 190, 28, 0.4) 0 0 8px 0;
+    animation: open-navbar 3s ease forwards;
+}
+@keyframes open-navbar {
+    from {
+        width: 0%;
+        border-bottom-left-radius: 200px 100px;
+        border-bottom-right-radius: 200px 100px;
+    }
+    to {
+        width: 80%;
+        border-bottom-left-radius: 100px 60px;
+        border-bottom-right-radius: 100px 60px;
+    }
+}
+#navbar linkButton {
+    font-family: Consolas, monospace;
+    display: inline-block;
+    position: absolute;
+    letter-spacing: 2px;
+    color: #c1a691;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: all 0.5s ease-out;
+    opacity: 0%;
+    animation: opacity-in 2s ease-in forwards;
+    animation-delay: 1s;
+}
+#navbar linkButton:hover {
+    color: #feb386;
+    padding-left: 20px;
+    padding-right: 20px;
+    letter-spacing: 5px;
+    transition: all 1s ease-out;
+    text-shadow: 0 0 50px #f5f0f0, 0 0 30px #f54da1, 0 0 40px #f54da1, 0 0 50px #f54da1, 0 0 60px #f54da1;
+}
+@keyframes opacity-in {
+    from {
+        opacity: 0%;
+    }
+    to {
+        opacity: 100%;
+    }
+}
+#navbar a {
+    text-decoration: none;
+    color: inherit;
+}
+.left-item {
+    left: 0;
+    text-align: left;
+    padding: 5px 40px 0 10px;
+    background: linear-gradient(90deg, rgba(184, 134, 11, 0.3) 30%, rgba(218, 165, 32, 0) 100%) 0 100% no-repeat;
+    background-size: 100% 1px;
+}
+.right-item {
+    right: 0;
+    text-align: right;
+    padding: 5px 10px 0 40px;
+    background: linear-gradient(90deg, rgba(218, 165, 32, 0) 0%, rgba(184, 134, 11, 0.3) 70%) 0 100% no-repeat;
+    background-size: 100% 1px;
+}
+#navbar li {
+    display: inline-block;
+}
+.bottom-item {
+    position: absolute;
+    bottom: 15px;
+    background: linear-gradient(90deg,  rgba(218, 165, 32, 0) 0%, rgba(184, 134, 11, 0.3) 30%, rgba(184, 134, 11, 0.3) 70%, rgba(218, 165, 32, 0) 100%) 0 100% no-repeat;
+    background-size: 100% 1px;
+}
+.lighting-text {
+    font-size: 30px;
+    color: #ffead2;
+    text-shadow: 0 0 50px #f5f0f0, 0 0 30px #f54da1, 0 0 40px #f54da1, 0 0 50px #f54da1, 0 0 60px #f54da1, 0 0 70px #f54da1, 0 0 80px #f54da1;
+    opacity: 0%;
+    animation: opacity-in 2s ease-in forwards;
+    animation-delay: 0.5s;
+}
+.progress-bar {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, rgba(218, 165, 32, 0.7) 53%, rgba(0, 0, 0, 0.5) 56%) -100% 0 no-repeat;
+    background-size: 200%;
+    box-shadow: rgba(231, 190, 28, 0.7) 0 0 5px 0;
+    animation: move-left 3s ease normal forwards;
+}
+@keyframes move-left {
+    from {
+        background-position: 0% 0;
+    }
+    to {
+        background-position: 100% 0;
+    }
+}
+
+@media (max-width: 200px) {
+    #navbar {display: none}
+}
+
+.submit {
+    border: 0 solid;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+    outline: rgba(255, 255, 255, .5) solid 1px;
+    outline-offset: 0px;
+    text-shadow: none;
+    transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.submit {
+    border: 1px solid;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, .5), 0 0 20px rgba(255, 255, 255, .2);
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 15px;
+    text-shadow: 1px 1px 2px #427388;
+}

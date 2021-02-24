@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Site</title>
+    <link rel="stylesheet" href="index.css" type="text/css" media="all">
+</head>
+
+<body>
+<ul id="navbar">
+    <linkButton href="/branch" class="left-item">
+        Ветка #<span id="branch"></span>
+    </linkButton>
+    <linkButton href="/login" class="right-item">
+        <span id="nickname">Логин</span>
+        <img id="avatar" src="images/default_avatar.png" alt="авва" style="width: 15px; height: 15px; border-radius: 50%">
+    </linkButton>
+    <li class="bottom-item">
+        <div class="lighting-text" id="progress" style="font-family: GothicE,monospace">0</div>
+    </li>
+    <li class="bottom-item" style="left: 0; width: 100%">
+        <div class="progress-bar">
+            <div class="left-ball"></div>
+            <div class="center-ball"></div>
+            <div class="right-ball"></div>
+        </div>
+    </li>
+</ul>
+
+<div id="body">This is loading page...</div>
+<!--a href="/login"><linkButton>This is button</linkButton></a-->
+
+<script type="module" src="index.js"></script>
+</body>
+
+</html>
