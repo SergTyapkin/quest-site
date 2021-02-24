@@ -1,6 +1,7 @@
 import * as login from "./pages/login.html.js";
 import * as register from "./pages/register.html.js";
 import * as me from "./pages/me.html.js";
+import * as about from "./pages/about.html.js";
 
 export function render(target, path, router) {
     const body = document.getElementById(target);

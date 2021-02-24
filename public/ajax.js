@@ -20,4 +20,4 @@ export function ajax(method, url, body = null, callback) {
     }
 
     xhr.send();
-};
+}

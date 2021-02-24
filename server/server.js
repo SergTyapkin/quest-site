@@ -80,13 +80,11 @@ app.post('/login', (req, res) => {
     res.status(200).end();
 });
 
-app.get('/me', function (req, res) {
+app.get('/me', (req, res) => {
     const id = req.cookies['userId'];
     const nickname = nicks[id];
     if (!nickname || !users[nickname])
         return res.status(401).json({error: 'Пользователя ' + nickname + ' нет в базе данных.'});
-
-    users[nickname].progress += 1;
 
     res.status(200).json(users[nickname]).end();
 });
