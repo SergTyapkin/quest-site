@@ -9,8 +9,8 @@ export const html = `
 <div><input type="submit" value="Хочу аккаунт"></div>
 </form>
 <div id="error"></div>
-<div><linkButton><a  href='/login'>Go to login</a></linkButton></div>
-<div><linkButton><a  href='/me'>Go to my profile</a></linkButton></div>
+<div><linkButton href='/login'>Go to login</linkButton></div>
+<div><linkButton href='/me'>Go to my profile</linkButton></div>
 `;
 
 export function source(element, router) {

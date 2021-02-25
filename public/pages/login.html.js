@@ -1,15 +1,15 @@
 import {ajax} from "../ajax.js";
 
 export const html = `
-<div>This is login page.</div>
+<div class="text-big">This is login page.</div>
 <form id="form">
-<div><span>Your nickname:</span> <input id="nickname-form"></div>
-<div><span>Your password:</span> <input id="password-form"></div>
-<div><input type="submit" value="Погнали"></div>
+<div><span class="text">Your nickname:</span> <input id="nickname-form"></div>
+<div><span class="text">Your password:</span> <input id="password-form"></div>
+<div><input class="submit-form" type="submit" value="Погнали"></div>
 </form>
 <div id="error"></div>
-<div><linkButton href='/register'>Go to register</linkButton></div>
-<div><linkButton href='/me'>Go to my profile</linkButton></div>
+<div class="text"><linkButton href='/register'>Go to register</linkButton></div>
+<div class="text"><linkButton href='/me'>Go to my profile</linkButton></div>
 `;
 
 export function source(element, router) {

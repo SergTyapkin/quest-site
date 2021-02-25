@@ -11,7 +11,6 @@ export const html = `
 <div id="error"></div>
 <div><linkButton href='/login'>Go to login</linkButton></div>
 <div><linkButton href='/register'>Go to register</linkButton></div>
-<div><linkButton href='/login' class="submit" style="color: inherit" onclick="document.cookie = 'userId=-1; max-age=-1';">Выйти</linkButton></div>
 `;
 
 export function source(element, router) {

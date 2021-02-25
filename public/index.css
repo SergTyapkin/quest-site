@@ -157,6 +157,91 @@ linkButton {
     text-shadow: 1px 1px 2px #427388;
 }
 
+.title-big {
+    text-transform: uppercase;
+    font-size: 40px;
+    font-family: Roboto, monospace;
+    color: antiquewhite;
+}
+.title {
+    text-transform: uppercase;
+    font-size: 30px;
+    font-family: Roboto, monospace;
+    color: antiquewhite;
+}
+.text-big {
+    font-size: 20px;
+    font-family: Roboto, monospace;
+    color: #e5cdb1;
+}
+.text {
+    font-size: 15px;
+    font-family: Arial, monospace;
+    color: #beaa92;
+}
+
+.underbar-contacts {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 15px 0;
+    text-align: left;
+    background: linear-gradient(20deg, rgba(84, 67, 24, 0) 0%, rgba(84, 67, 24, 0.6) 50%, rgba(84, 67, 24, 0) 100%) no-repeat;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-top: solid 2px;
+    border-color: #e0aa1e;
+    box-shadow: 0 3px 10px 0 rgba(17, 12, 1, 1) inset, rgba(231, 190, 28, 0.4) 0 0 8px 0;
+}
+
+.underbar-contacts li {
+    display: inline-block;
+    color: #a59e94;
+    font-size: 12px;
+    padding: 10px;
+    text-shadow: 0 0 8px #c6bfbf, 0 0 6px #c64752, 0 0 4px #b15518;
+}
+
+.underbar {
+    border-top-left-radius: 100px 60px;
+    border-top-right-radius: 100px 60px;
+    height: 60px;
+    list-style: none;
+    margin: 10px auto 0 auto;
+    padding: 0;
+    text-align: center;
+    background: linear-gradient(20deg, rgba(84, 67, 24, 0) 0%, rgba(84, 67, 24, 0.6) 50%, rgba(84, 67, 24, 0) 100%);
+    position: relative;
+    bottom: 0;
+    width: 80%;
+    clip-path: fill-box;
+    overflow: hidden;
+    box-shadow: 30px 0 0 0 rgba(17, 12, 1, 1) inset, rgba(231, 190, 28, 0.4) 0 0 8px 0;
+    animation: open-navbar 3s ease forwards;
+}
+
+.underbar input {
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    height: 40px;
+    margin-left: 30px;
+    position: absolute;
+    horiz-align: center;
+    vertical-align: center;
+    background: linear-gradient(90deg, rgba(126, 102, 37, 0.7) 0%, rgba(71, 56, 20, 0.4) 100%) 50% 50% no-repeat;
+}
+
+.underbar button {
+    border-top-left-radius: 40px;
+    border-top-right-radius: 100px 40px;
+    height: 40px;
+    width: 60px;
+    left: 0;
+    position: absolute;
+    vertical-align: center;
+    background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(126, 102, 37, 0.7) 100%) 50% 50% no-repeat;
+}
+
 @media (max-width: 200px) {
     #navbar {display: none}
 }
