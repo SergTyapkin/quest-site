@@ -158,23 +158,29 @@ linkButton {
 }
 
 .title-big {
+    text-shadow: 0 0 8px #c6c1bf, 0 0 4px #ae613c;
     text-transform: uppercase;
     font-size: 40px;
-    font-family: Roboto, monospace;
+    font-family: Arial, monospace;
     color: antiquewhite;
 }
 .title {
+    text-shadow: 0 0 8px #c6c1bf, 0 0 4px #ae613c;
     text-transform: uppercase;
     font-size: 30px;
-    font-family: Roboto, monospace;
+    font-family: Arial, monospace;
     color: antiquewhite;
 }
 .text-big {
+    text-shadow: 0 0 3px #a29a97;
+    text-transform: none;
     font-size: 20px;
     font-family: Roboto, monospace;
     color: #e5cdb1;
 }
 .text {
+    text-shadow: none;
+    text-transform: none;
     font-size: 15px;
     font-family: Arial, monospace;
     color: #beaa92;
@@ -240,6 +246,10 @@ linkButton {
     position: absolute;
     vertical-align: center;
     background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(126, 102, 37, 0.7) 100%) 50% 50% no-repeat;
+}
+/*cubic-bezier(0.03, 1.19, 0.87, 0.99)*/
+.center {
+    right: 0;
 }
 
 @media (max-width: 200px) {

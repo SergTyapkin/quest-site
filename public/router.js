@@ -34,7 +34,7 @@ export default class Router {
 
     linksListener(event) {
         event.preventDefault();
-        //console.log(event.currentTarget.innerHTML.toString());
+        console.log(event.currentTarget.innerHTML.toString());
         this.goto(event.currentTarget.getAttribute("href").toString());
     }
 
