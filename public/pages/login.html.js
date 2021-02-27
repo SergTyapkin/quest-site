@@ -8,11 +8,11 @@ export const html = `
     </div>
     <div class="form text">
         <div class="mtb20">
-            <label class="text-big" style="font-family: Arial">ЛОГИН<span style="font-style: italic" id="loginErrorText"></span></label>
+            <div><label class="text-big" style="font-family: Arial">ЛОГИН<span style="font-style: italic" id="loginErrorText"></span></label></div>
             <input class="fullwidth p10" type="text"  id="nickname-form">
         </div>
         <div class="mtb20">
-            <label class="text-big" style="font-family: Arial">ПАРОЛЬ<span style="font-style: italic" id="passwordErrorText"></span></label>
+            <div><label class="text-big" style="font-family: Arial">ПАРОЛЬ<span style="font-style: italic" id="passwordErrorText"></span></label></div>
             <input class="fullwidth p10" type="password" id="password-form">
             <div class="text-small" style="padding: 5px 0 5px 0"><linkButton href="/about">Забыл пароль?</linkButton> - пей таблетки</div>
         </div>
