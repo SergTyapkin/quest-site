@@ -1,15 +1,27 @@
 import {ajax} from "../ajax.js";
 
 export const html = `
-<div class="text-big">This is login page.</div>
 <form id="form">
-<div><span class="text">Your nickname:</span> <input id="nickname-form"></div>
-<div><span class="text">Your password:</span> <input id="password-form"></div>
-<div><input class="submit-form" type="submit" value="Погнали"></div>
+    <div class="center">
+        <div class="title">Вход</div>
+        <div class="text">Ну давай, вспомни пароль, войди в меня</div>
+    </div>
+    <div class="form text">
+        <div class="mtb20">
+            <label class="text-big" style="font-family: Arial">ЛОГИН<span style="font-style: italic" id="loginErrorText"></span></label>
+            <input class="fullwidth p10" type="text"  id="nickname-form">
+        </div>
+        <div class="mtb20">
+            <label class="text-big" style="font-family: Arial">ПАРОЛЬ<span style="font-style: italic" id="passwordErrorText"></span></label>
+            <input class="fullwidth p10" type="password" id="password-form">
+            <div class="text-small" style="padding: 5px 0 5px 0"><linkButton href="/about">Забыл пароль?</linkButton> - пей таблетки</div>
+        </div>
+        <div class="mtb20">
+            <div><input class="submit fullwidth center p10" style="border-color: #b08946; outline: none" type="submit" value="Погнали"></div>
+            <div class="text" style="padding: 5px 0 5px 0">Нужен аккаунт? <linkButton href="/register">Создать</linkButton></div>
+        </div>
+    </div>
 </form>
-<div id="error"></div>
-<div class="text"><linkButton href='/register'>Go to register</linkButton></div>
-<div class="text"><linkButton href='/me'>Go to my profile</linkButton></div>
 `;
 
 export function source(element, router) {

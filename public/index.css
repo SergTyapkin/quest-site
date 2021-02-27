@@ -1,7 +1,7 @@
 body {
     margin: 0;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     color: #fff;
     background: linear-gradient(-20deg, #b8860b 0%, #000000 70%) no-repeat;
     background-size: 10000%;
@@ -149,6 +149,7 @@ linkButton {
     outline-offset: 0px;
     text-shadow: none;
     transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: pointer;
 }
 .submit.light {
     outline: none;
@@ -188,6 +189,12 @@ linkButton {
     font-family: Arial, monospace;
     color: #beaa92;
 }
+.text-small {
+    text-shadow: none;
+    font-size: 13px;
+    font-family: Arial, monospace;
+    color: #ab9a86;
+}
 
 .underbar-contacts {
     list-style: none;
@@ -219,13 +226,13 @@ linkButton {
     margin: 10px auto 0 auto;
     padding: 0;
     text-align: center;
-    background: linear-gradient(20deg, rgba(84, 67, 24, 0) 0%, rgba(84, 67, 24, 0.6) 50%, rgba(84, 67, 24, 0) 100%);
+    background: linear-gradient(20deg, rgba(84, 67, 24, 0) 0%, rgba(84, 67, 24, 0.6) 50%, rgba(84, 67, 24, 0) 100%) 50% 50% no-repeat;
     position: relative;
     bottom: 0;
     width: 80%;
     clip-path: fill-box;
     overflow: hidden;
-    box-shadow: 30px 0 0 0 rgba(17, 12, 1, 1) inset, rgba(231, 190, 28, 0.4) 0 0 8px 0;
+    box-shadow: 30px 0 0 10px rgba(17, 12, 1, 1) inset, rgba(231, 190, 28, 0.4) 0 0 8px 0;
     animation: open-navbar 3s ease forwards;
 }
 
@@ -250,10 +257,69 @@ linkButton {
     vertical-align: center;
     background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(126, 102, 37, 0.7) 100%) 50% 50% no-repeat;
 }
-/*cubic-bezier(0.03, 1.19, 0.87, 0.99)*/
+
 .center {
     margin: 10px auto 10px auto;
     text-align: center;
+}
+
+form {
+    padding: 20px 30px;
+    max-width: 460px;
+    margin: 150px auto;
+    border-radius: 7px;
+    background: linear-gradient(20deg, rgba(84, 67, 24, 0) 0%, rgb(88, 58, 24) 50%, rgba(84, 67, 24, 0) 100%) 50% 50% no-repeat;
+    box-shadow: 0 0 10px 0 rgba(162, 116, 14, 0.7), 0 0 15px 0 rgba(34, 28, 4, 0.4) inset;
+}
+
+form input {
+    font-size: 1rem;
+    color: #f5f5f5;
+    border: 1px solid #080808;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    background: linear-gradient(20deg, rgba(84, 67, 24, 0.4) 0%, rgba(140, 86, 39, 0.6) 50%, rgba(84, 67, 24, 0.4) 100%) 50% 50% no-repeat;
+    box-shadow: 0 0 10px 0 rgba(162, 116, 14, 0.7), 0 0 15px 0 rgb(24, 19, 3) inset;
+}
+
+form linkButton {
+    color: #d2825c;
+    text-shadow: none;
+    transition: all 0.5s ease-out;
+}
+form linkButton:hover {
+    color: #e2c5a3;
+    text-shadow: 0 0 2px #c4a25e;
+}
+
+.fullwidth {
+    width: 100%;
+}
+
+.mtb20 {
+    margin: 20px 0;
+}
+.m20 {
+    margin: 20px;
+}
+.m10 {
+    margin: 10px;
+}
+.m0 {
+    margin: 0;
+}
+.p20 {
+    padding: 20px;
+}
+.ptb10 {
+    padding: 10px 0;
+}
+.p10 {
+    padding: 10px;
+}
+.p0 {
+    padding: 0;
 }
 
 @media (max-width: 200px) {

@@ -28,6 +28,13 @@ const users = {
         branch: undefined,
         progress: undefined,
     },
+    '.': {
+        nickname: '.',
+        email: 'nomail@mail.ru',
+        password: '.',
+        branch: undefined,
+        progress: undefined,
+    }
 };
 const nicks = {};
 
