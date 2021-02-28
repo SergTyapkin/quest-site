@@ -1,11 +1,14 @@
 body {
     margin: 0;
-    width: 100vw;
+    padding-bottom: 60px;
+    width: 100%;
     min-height: 100vh;
+    position: relative;
     color: #fff;
     background: linear-gradient(-20deg, #b8860b 0%, #000000 70%) no-repeat;
     background-size: 10000%;
     animation: load-out 3s ease normal forwards;
+    box-sizing: border-box;
 }
 
 @keyframes load-in {
@@ -158,11 +161,10 @@ linkButton {
     transition: all 1250ms cubic-bezier(0, 3, 0.22, 1);
 }
 .submit:hover {
-    border: 1px solid;
     box-shadow: inset 0 0 20px rgb(195, 162, 127), 0 0 20px rgb(255, 235, 164);
     outline-color: rgba(255, 255, 255, 0);
     outline-offset: 15px;
-    text-shadow: 1px 1px 2px #427388;
+    text-shadow: 0 0 3px #427388;
 }
 
 .title-big {
@@ -198,7 +200,7 @@ linkButton {
 
 .underbar-contacts {
     list-style: none;
-    margin: 0;
+    margin: 50px 0 0 0;
     padding: 0 0 15px 0;
     text-align: left;
     background: linear-gradient(20deg, rgba(84, 67, 24, 0) 0%, rgba(84, 67, 24, 0.6) 50%, rgba(84, 67, 24, 0) 100%) no-repeat;
@@ -218,7 +220,7 @@ linkButton {
     text-shadow: 0 0 8px #c6bfbf, 0 0 6px #c64752, 0 0 4px #b15518;
 }
 
-.underbar {
+.underbar-input {
     border-top-left-radius: 100px 60px;
     border-top-right-radius: 100px 60px;
     height: 60px;
@@ -263,7 +265,7 @@ linkButton {
     text-align: center;
 }
 
-form {
+.form {
     padding: 20px 30px;
     max-width: 460px;
     margin: 150px auto;
@@ -272,7 +274,7 @@ form {
     box-shadow: 0 0 10px 0 rgba(162, 116, 14, 0.7), 0 0 15px 0 rgba(34, 28, 4, 0.4) inset;
 }
 
-form input {
+.form input {
     font-size: 1rem;
     color: #ead8bf;
     border: 1px solid #080808;
@@ -280,28 +282,40 @@ form input {
     transition: all 0.3s ease;
     box-sizing: border-box;
     background: linear-gradient(20deg, rgba(45, 36, 13, 0.4) 0%, rgba(62, 39, 17, 0.6) 50%, rgba(38, 30, 11, 0.4) 100%) 50% 50% no-repeat;
-    box-shadow: 0 0 10px 0 rgba(162, 116, 14, 0.7), 0 0 15px 0 rgb(24, 19, 3) inset;
+    box-shadow: 0 0 15px 0 rgb(24, 19, 3) inset, 0 0 10px 0 rgba(162, 116, 14, 0.7);
 }
 
-form .submit{
+.form .submit{
     background: linear-gradient(20deg, rgba(45, 36, 13, 0.4) 0%, rgba(90, 56, 25, 0.7) 50%, rgba(55, 43, 16, 0.4) 100%) 50% 50% no-repeat;
 }
 
-form input:focus {
+.form input:focus {
     outline: 0;
     border-color: darkgoldenrod;
-    border-radius: 3px;
-    box-shadow: 0 0 15px 0 rgba(162, 116, 14, 0.8), 0 0 10px 0 rgb(179, 139, 38) inset;
+    box-shadow:  0 0 10px 0 rgb(179, 139, 38) inset, 0 0 15px 0 rgba(162, 116, 14, 0.8);
 }
 
-form linkButton {
+.form linkButton {
     color: #d2825c;
     text-shadow: none;
     transition: all 0.5s ease-out;
 }
-form linkButton:hover {
+.form linkButton:hover {
     color: #e2c5a3;
     text-shadow: 0 0 2px #c4a25e;
+}
+
+.form .error {
+    color: #ff8e72;
+    font-size: 12px;
+    font-style: italic;
+    text-shadow: 0 0 1px #ffb39f;
+}
+.form .success {
+    color: #c4ff72;
+    font-size: 12px;
+    font-style: italic;
+    text-shadow: 0 0 1px #e2ff9f;
 }
 
 .fullwidth {
@@ -313,6 +327,9 @@ form linkButton:hover {
 }
 .m20 {
     margin: 20px;
+}
+.mtb10 {
+    margin: 10px 0;
 }
 .m10 {
     margin: 10px;

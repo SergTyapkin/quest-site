@@ -1,18 +1,18 @@
 import {ajax} from "../ajax.js";
 
 export const html = `
-<form id="form">
+<form id="form" class="form">
     <div class="center">
         <div class="title">Вход</div>
         <div class="text">Ну давай, вспомни пароль, войди в меня</div>
     </div>
-    <div class="form text">
+    <div class="text">
         <div class="mtb20">
-            <div><label class="text-big" style="font-family: Arial">ЛОГИН<span style="font-style: italic" id="loginErrorText"></span></label></div>
+            <div><label class="text-big" style="font-family: Arial">ЛОГИН <span class="error" id="nicknameError"></span></label></div>
             <input class="fullwidth p10" type="text"  id="nickname-form">
         </div>
         <div class="mtb20">
-            <div><label class="text-big" style="font-family: Arial">ПАРОЛЬ<span style="font-style: italic" id="passwordErrorText"></span></label></div>
+            <div><label class="text-big" style="font-family: Arial">ПАРОЛЬ <span class="error" id="passwordError"></span></label></div>
             <input class="fullwidth p10" type="password" id="password-form">
             <div class="text-small" style="padding: 5px 0 5px 0"><linkButton href="/about">Забыл пароль?</linkButton> - пей таблетки</div>
         </div>
@@ -32,12 +32,17 @@ export function source(element, router) {
        event.preventDefault();
        const nickname = document.getElementById("nickname-form").value.trim();
        const password = document.getElementById("password-form").value.trim();
+
        ajax("POST", "/login", {nickname, password}, (status, response) => {
            if (status == 200) { // valide
-                router.goto("/me");
+               document.getElementById("nickname").innerText = nickname;
+               document.getElementById("me/login-button").setAttribute('href', '/me');
+               router.goto("/me");
            } else { // invalide
-               if (response.error)
-                   document.getElementById("error").innerText = response.error;
+               if (response.nicknameError)
+                   document.getElementById("nicknameError").innerText = response.nicknameError;
+               if (response.passwordError)
+                   document.getElementById("passwordError").innerText = response.passwordError;
            }
        });
     });

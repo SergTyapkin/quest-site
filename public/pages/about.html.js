@@ -22,7 +22,7 @@ export const html = `
     <div class="text">Там снизу есть <span class="text-big">контакты</span> - пиши, не стестняйся.</div>
 </div>
 <div style="position: relative; text-align: center; margin: 30px">
-    <linkButton class="submit light" href="/register">Регистрация</linkButton>
+    <linkButton class="submit light p10" href="/register" style="background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(84,69,25,0.7) 100%) 50% 50% no-repeat">Регистрация</linkButton>
 </div>
 
 <ul class="underbar-contacts">
@@ -35,11 +35,11 @@ export const html = `
     </li>
     <li>
         <div class="title" style="font-size: 18px; font-family: Arial">VK: <span style="font-size: 8px">(лучше сюда)</span> </div>
-        <div><a href="https://vk.com/0pointer" style="color: inherit; text-shadow: 0 0 8px #baa190">vk.com/0pointer</a></div>
+        <div><a href="https://vk.com/0pointer" target="_blank" style="color: inherit; text-shadow: 0 0 8px #baa190">vk.com/0pointer</a></div>
     </li>
     <li>
         <div class="title" style="font-size: 18px; font-family: Arial">Telegram:</div>
-        <div><a href="https://t.me/tyapkin_s" style="color: inherit; text-shadow: 0 0 8px #c3a38e">t.me/tyapkin_s</a></div>
+        <div><a href="https://t.me/tyapkin_s" target="_blank" style="color: inherit; text-shadow: 0 0 8px #c3a38e">t.me/tyapkin_s</a></div>
     </li>
 </ul>
 `;
