@@ -268,7 +268,7 @@ linkButton {
 .form {
     padding: 20px 30px;
     max-width: 460px;
-    margin: 150px auto;
+    margin: 100px auto 0;
     border-radius: 7px;
     background: linear-gradient(20deg, rgba(84, 67, 24, 0) 0%, rgb(88, 58, 24) 50%, rgba(84, 67, 24, 0) 100%) 50% 50% no-repeat;
     box-shadow: 0 0 10px 0 rgba(162, 116, 14, 0.7), 0 0 15px 0 rgba(34, 28, 4, 0.4) inset;
@@ -350,6 +350,6 @@ linkButton {
     padding: 0;
 }
 
-@media (max-width: 200px) {
+@media (max-width: 300px) {
     #navbar {display: none}
 }

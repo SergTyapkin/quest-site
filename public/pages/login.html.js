@@ -27,6 +27,7 @@ export const html = `
 export function source(element, router) {
     document.title = "Логин";
     element.innerHTML = html;
+    document.getElementById("nickname-form").focus();
 
     document.getElementById("form").addEventListener("submit", (event) => {
        event.preventDefault();

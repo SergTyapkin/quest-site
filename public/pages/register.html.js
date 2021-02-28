@@ -1,12 +1,12 @@
 import {ajax} from "../ajax.js";
 
 export const html = `
-<form id="form">
+<form id="form" class="form">
     <div class="center">
         <div class="title">Регистрация</div>
         <div class="text">Ну давай, покажи всю свою оригинальность</div>
     </div>
-    <div class="form text">
+    <div class="text">
         <div class="mtb20">
             <div><label class="text-big" style="font-family: Arial">ЛОГИН <span class="error" id="nicknameError"></span></label></div>
             <input class="fullwidth p10" type="text"  id="nickname-form">
@@ -32,6 +32,7 @@ export const html = `
 export function source(element, router) {
     document.title = "Регистрация";
     element.innerHTML = html;
+    document.getElementById("nickname-form").focus();
 
     document.getElementById("form").addEventListener("submit", (event) => {
         event.preventDefault();
