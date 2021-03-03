@@ -1,11 +1,15 @@
 'use strict';
 
+const bumonka = require("./quests/8 марта. Бауманка.js");
+const testQuest = require("./quests/Тестовый квест.js");
+
 const express = require('express');
 const body = require('body-parser');
 const cookie = require('cookie-parser');
 const morgan = require('morgan');
 const uuid = require('uuid');
 const path = require('path');
+const fs = require('fs');
 const app = express();
 
 app.use(morgan('dev'));
@@ -13,32 +17,111 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')));
 app.use(body.json());
 app.use(cookie());
 
+
+const quests = [
+    //bumonka.quest,
+    testQuest.quest,
+];
+
 const users = {
     'tyapkin': {
         nickname: 'tyapkin',
         email: 'tyapkin2002@mail.ru',
         password: 'password',
-        branch: 1,
-        progress: 1,
+        quest: undefined,
+        branch: undefined,
+        progress: undefined,
+        rating: 0,
     },
     'sererga': {
         nickname: 'sererga',
         email: 'sererga115@gmail.com',
         password: 'password',
+        quest: undefined,
         branch: undefined,
-        progress: undefined,
+        progress: 0,
+        rating: 0,
     },
     '.': {
         nickname: '.',
         email: 'nomail@mail.ru',
         password: '.',
-        branch: undefined,
-        progress: undefined,
+        quest: 0,
+        branch: 0,
+        progress: 0,
+        rating: 0,
     }
 };
 const nicks = {};
 
-app.post('/register', (req, res) => {
+app.get('/api/play', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({answerError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    const user = users[nicks[id]];
+    console.log(user);
+
+    if (typeof user.quest === "undefined" || typeof user.branch === "undefined")
+        return res.status(401).json({answerError: 'Квест не выбран.'});
+
+    const branch = quests[user.quest].branches[user.branch];
+    const task = {};
+    if (user.progress === branch.tasks.length)
+        Object.assign(task, branch.final);
+    else
+        Object.assign(task, branch.tasks[user.progress]);
+    delete task.answers;
+
+    task.progress = user.progress;
+    task.len = branch.tasks.length;
+    res.status(200).json(task);
+});
+
+app.post('/api/play', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({answerError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    const user = users[nicks[id]];
+
+    if (quests[user.quest].branches[user.branch].tasks[user.progress].answers.indexOf(req.body.answer.toLowerCase()) === -1)
+        return res.status(400).json({answerError: 'Ответ неверный'});
+
+    user.progress += 1;
+    res.status(200).end();
+});
+
+app.get('/api/quest', (req, res) => {
+    const questTitles = [];
+    for (const quest of quests)
+        questTitles.push(quest.title)
+
+    res.status(200).json(questTitles);
+});
+
+app.post('/api/branch', (req, res) => {
+    const branches = [];
+    for (const branch of quests[req.body.questId].branches)
+        branches.push({title: branch.title, description: branch.description});
+
+    res.status(200).json(branches);
+});
+
+app.post('/api/quest', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({answerError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    const user = users[nicks[id]];
+
+    user.quest = req.body.questId;
+    user.branch = req.body.branchId;
+    user.progress = 0;
+
+    console.log(user);
+
+    res.status(200).end();
+});
+
+app.post('/api/register', (req, res) => {
     const nickname = req.body.nickname;
     const password = req.body.password;
     const email = req.body.email.toLowerCase();
@@ -60,7 +143,7 @@ app.post('/register', (req, res) => {
         if (userData.email === email)
             return res.status(400).json({emailError: 'На этот email уже зарегистрирован пользователь "' + userData.nickname + '"'});
 
-    users[nickname] = {nickname, password, email, branch: undefined, progress: undefined};
+    users[nickname] = {nickname, password, email, branch: undefined, progress: 0};
     const id = uuid.v4();
     nicks[id] = nickname;
 
@@ -68,7 +151,7 @@ app.post('/register', (req, res) => {
     res.status(200).end();
 });
 
-app.post('/login', (req, res) => {
+app.post('/api/login', (req, res) => {
     const password = req.body.password;
     const nickname = req.body.nickname;
     if (!nickname)
@@ -83,24 +166,26 @@ app.post('/login', (req, res) => {
     const id = uuid.v4();
     nicks[id] = nickname;
 
-    res.cookie('userId', id, {expires: new Date(Date.now() + 1000 * 3600 * 24)});
+    res.cookie('userId', id, {expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)}); // on week
     res.status(200).end();
 });
 
-app.get('/me', (req, res) => {
+app.get('/api/me', (req, res) => {
     const id = req.cookies['userId'];
     const nickname = nicks[id];
     if (!nickname || !users[nickname])
         return res.status(401).json({error: 'Пользователя ' + nickname + ' нет в базе данных.'});
 
-    const user = {
-        nickname: nickname,
-        email: users[nickname].email,
-    };
+    const user = {};
+    Object.assign(user, users[nickname]);
+    delete user.password;
+    if (typeof user.quest !== "undefined" && typeof user.branch !== "undefined")
+        user.len = quests[user.quest].branches[user.branch].tasks.length;
+
     res.status(200).json(user).end();
 });
 
-app.post('/me/change-data', (req, res) => {
+app.post('/api/me/change-data', (req, res) => {
     const id = req.cookies['userId'];
     if (!(id in nicks))
         return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
@@ -131,14 +216,14 @@ app.post('/me/change-data', (req, res) => {
         return res.status(400).json({nicknameError: 'Зачем кнопку теребишь, если не поменял ничего?', emailError: ''});
 
     delete users[nicks[id]];
-    users[nickname] = {nickname, prevPassword, email, branch: undefined, progress: undefined}; // create new user
+    users[nickname] = {nickname, prevPassword, email, branch: undefined, progress: 0}; // create new user
     nicks[id] = nickname;
 
     res.cookie('userId', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
     res.status(200).end();
 });
 
-app.post('/me/check-password', (req, res) => {
+app.post('/api/me/check-password', (req, res) => {
     const id = req.cookies['userId'];
     if (!(id in nicks))
         return res.status(400).json({passwordError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
@@ -151,7 +236,7 @@ app.post('/me/check-password', (req, res) => {
     res.status(200).end();
 });
 
-app.post('/me/change-password', (req, res) => {
+app.post('/api/me/change-password', (req, res) => {
     const id = req.cookies['userId'];
     if (!(id in nicks))
         return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
@@ -173,6 +258,23 @@ app.post('/me/change-password', (req, res) => {
     users[nicks[id]].password = newPassword;
 
     res.status(200).end();
+});
+
+app.get('/api/users', (req, res) => {
+    res.status(200).json(users).end();
+});
+
+
+app.get('/*', (req, res) => {
+    fs.readFile('D:\\Documents\\C++\\Sites\\quest-site\\public\\redirect.html', (err, data) => {
+        res.send(data.toString());
+    });
+});
+
+app.get('/redirect.js', (req, res) => {
+    fs.readFile('D:\\Documents\\C++\\Sites\\quest-site\\public\\pages\\play.html.js', (err, data) => {
+        res.send(data.toString());
+    });
 });
 
 const port = process.env.PORT || 8000;

@@ -1,26 +1,62 @@
-export const html = `
-<div class="title-big">Куда ты попал?</div>
-<div class="text"><span class="text-big>"Здесь</span> ты сможешь найти <span class="text-big">квест</span> по душе, созданный нашими профессионалами</div>
-<div class="title">"Shut up and take my money"</div>
-<div class="text">Всё <span class="text-big">бесплатно</span> <span style="font-style: italic">пока что</span></div>
+import {ajax} from "./../ajax.js";
 
-<ul class="underbar-contacts">
-    <li>
-        <div class="text-big">E-mail:</div>
-        <div class="text">Tyapkin2002@mail.ru</div>
-    </li>
-    <li>
-        <div class="text-big">VK:</div>
-        <div class="text"><a href="https://vk.com/0pointer">vk.com/0pointer</a></div>
-    </li>
-    <li>
-        <div class="text-big">Telegram:</div>
-        <div class="text"><a href="https://t.me/tyapkin_s">t.me/tyapkin_s</a></div>
-    </li>
-</ul>
+const html = `
+<div class="left-item bg-left" style="padding: 20px; margin-top: 30px">
+    <div class="title" id="task-title"></div>
+</div>
+<div class="text-big m20" id="task-description"></div>
+
+<form id="form" class="form">
+    <div class="center">
+        <div class="title" id="task-question"></div>
+    </div>
+    <div class="text">
+        <div class="error" id="answerError"></div>
+        <div class="mtb20"><input class="fullwidth p10" type="text"  id="answer-form"></div>
+        <div class="mtb20"><input class="submit fullwidth center p10" style="border-color: #b08946; outline: none" type="submit" value="Ответить"></div>
+    </div>
+</form>
+<div id="new-quest-button" style="position: relative; text-align: center; margin: 30px; display: none">
+    <linkButton class="submit p10" href="/quest" style="border-radius: 10px; background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(84,69,25,0.7) 100%) 50% 50% no-repeat">Выбрать новый квест</linkButton>
+</div>
 `;
 
 export function source(element, router) {
-    document.title = "Квест";
+    document.title = "Выбор ветки";
     element.innerHTML = html;
-}
+
+    ajax('GET', '/api/play', null, (status, response) => {
+        if (status == 200) // valide
+            ;
+        else if (status == 401) // invalide
+                return router.goto("/quest");
+        else
+            return router.goto("/login");
+
+        document.getElementById("progress").innerText = response.progress;
+        document.getElementById("progressbar").style.backgroundPositionX = `${100 - 100 / response.len * response.progress}%`;
+
+        document.getElementById("task-title").innerText = response.title;
+        document.getElementById("task-description").innerText = response.description;
+        document.getElementById("task-question").innerText = response.question;
+
+        if (!response.question) {
+            document.getElementById("form").style.display = "none";
+            document.getElementById("new-quest-button").style.display = "block";
+        }
+    });
+
+    document.getElementById("form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const answer = document.getElementById("answer-form").value.trim();
+
+        ajax("POST", "/api/play", {answer}, (status, response) => {
+            if (status == 200) { // valide
+                router.goto("/play");
+            } else { // invalide
+                if (response.answerError)
+                    document.getElementById("answerError").innerText = response.answerError;
+            }
+        });
+    });
+};

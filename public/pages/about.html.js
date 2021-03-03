@@ -1,4 +1,4 @@
-export const html = `
+const html = `
 <div class="left-item" style="padding: 20px">
     <div class="title-big">КУДА ТЫ ПОПАЛ?</div>
     <div class="text"><span class="text-big">Здесь</span> ты сможешь найти <span class="text-big">онлайн-квест</span> по душе, созданный нашими професси<span style="font-style: italic">онал</span>ами.</div>

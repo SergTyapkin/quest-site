@@ -1,6 +1,6 @@
 import {ajax} from "../ajax.js";
 
-export const html = `
+const html = `
 <form id="form" class="form">
     <div class="center">
         <div class="title">Вход</div>
@@ -34,7 +34,7 @@ export function source(element, router) {
        const nickname = document.getElementById("nickname-form").value.trim();
        const password = document.getElementById("password-form").value.trim();
 
-       ajax("POST", "/login", {nickname, password}, (status, response) => {
+       ajax("POST", "/api/login", {nickname, password}, (status, response) => {
            if (status == 200) { // valide
                document.getElementById("nickname").innerText = nickname;
                document.getElementById("me/login-button").setAttribute('href', '/me');

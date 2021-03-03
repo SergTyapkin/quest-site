@@ -1,6 +1,6 @@
 import {ajax} from "./../ajax.js";
 
-export const html = `
+const html = `
 <div class="form text">
     <div class="center">
         <div class="title">Твой профиль</div>
@@ -37,6 +37,9 @@ export const html = `
         </div>
     </form>
 </div>
+<div style="position: relative; text-align: center; margin: 30px">
+    <linkButton class="submit p10" href="/play" style="border-radius: 10px; background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(84,69,25,0.7) 100%) 50% 50% no-repeat">К квесту</linkButton>
+</div>
 `;
 
 export function source(element, router) {
@@ -47,7 +50,7 @@ export function source(element, router) {
         event.preventDefault();
         const nickname = document.getElementById("nickname-form").value.trim();
         const email = document.getElementById("email-form").value.trim();
-        ajax("POST", "/me/change-data", {nickname, email}, (status, response) => {
+        ajax("POST", "/api/me/change-data", {nickname, email}, (status, response) => {
             if (status == 200) { // valide
                 document.getElementById("completeDataChange").innerText = "Не знаю, зачем тебе это, но данные изменены";
                 document.getElementById("nicknameError").innerText = "";
@@ -67,25 +70,29 @@ export function source(element, router) {
         const password = document.getElementById("password-form").value.trim();
         const newPassword = document.getElementById("new-password-form").value.trim();
 
+        let newPasswordBlock = document.getElementById("new-password-block");
         if (newPassword === "") {
-            ajax("POST", "/me/check-password", {password}, (status, response) => {
+            ajax("POST", "/api/me/check-password", {password}, (status, response) => {
                 if (status == 200) { // valide
                     document.getElementById("button-password-form").style.display = "none";
                     document.getElementById("password-form").style.width = "100%";
-                    document.getElementById("new-password-block").style.height = "auto";
-                    document.getElementById("new-password-block").style.opacity = "100%";
+                    document.getElementById("password-form").setAttribute("disabled", "");
+                    document.getElementById("new-password-form").focus();
+                    newPasswordBlock.style.height = `${newPasswordBlock.scrollHeight}px`;
+                    newPasswordBlock.style.opacity = "100%";
                     document.getElementById("passwordError").innerText = "";
                 } else { // invalide
                     document.getElementById("button-password-form").style.display = "inline";
                     document.getElementById("password-form").style.width = "80%";
-                    document.getElementById("new-password-block").style.height = "0";
-                    document.getElementById("new-password-block").style.opacity = "0%";
+                    document.getElementById("password-form").removeAttribute("disabled");
+                    newPasswordBlock.style.height = "0";
+                    newPasswordBlock.style.opacity = "0%";
                     if (response.passwordError)
                         document.getElementById("passwordError").innerText = response.passwordError;
                 }
             });
         } else {
-            ajax("POST", "/me/change-password", {password, newPassword}, (status, response) => {
+            ajax("POST", "/api/me/change-password", {password, newPassword}, (status, response) => {
                 if (status == 200) { // valide
                     document.getElementById("passwordError").innerText = "";
                     document.getElementById("newPasswordError").innerText = "";
@@ -100,7 +107,7 @@ export function source(element, router) {
         }
     });
 
-    ajax('GET', '/me', null, (status, response) => {
+    ajax('GET', '/api/me', null, (status, response) => {
         if (status === 200) { // is authorized
             document.getElementById("nickname-form").value = response.nickname;
             document.getElementById("email-form").value = response.email;

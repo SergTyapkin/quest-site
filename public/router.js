@@ -2,7 +2,6 @@ import * as renderer from "./renderer.js";
 
 export default class Router {
     linkedButtons;
-    request = new XMLHttpRequest();
 
     constructor() {
         window.onpopstate = ((event) => {
@@ -24,7 +23,10 @@ export default class Router {
 
     relinkButtons() {
         this.linkedButtons.forEach((button) => {
-            //console.log("Remove link: " + button.innerText);
+            console.log("Remove link: " + button.innerHTML);
+            const parent = button.parentElement;
+            //console.log("Remove parent: " + parent.innerHTML);
+            //parent.innerHTML = parent.innerHTML;
             button.removeEventListener("click", (event) => {
                 this.linksListener(event);
             });
@@ -40,15 +42,6 @@ export default class Router {
 
     goto(path) {
         history.pushState({}, "", path);
-        renderer.render("body", path, this);
-        this.relinkButtons();
-    }
-
-    back() {
-        history.back();
-    }
-
-    forward() {
-        history.forward();
+        renderer.render("body", path, this, () => {this.relinkButtons();});
     }
 }

@@ -1,6 +1,6 @@
 import {ajax} from "../ajax.js";
 
-export const html = `
+const html = `
 <form id="form" class="form">
     <div class="center">
         <div class="title">Регистрация</div>
@@ -40,7 +40,7 @@ export function source(element, router) {
         const password = document.getElementById("password-form").value.trim();
         const email = document.getElementById("email-form").value.trim();
 
-        ajax("POST", "/register", {nickname, password, email}, (status, response) => {
+        ajax("POST", "/api/register", {nickname, password, email}, (status, response) => {
             if (status == 200) { // valide
                 router.goto("/me");
             } else { // invalide
