@@ -1,22 +1,22 @@
 import {ajax} from "./../ajax.js";
 
 const htmlQuests = `
-<div id="choose-quest">
+<div id="choose-quest" style="transition: all 1s ease; left: 0%; position: absolute; width: 100%">
     <div class="left-item bg-left" style="padding: 20px; margin-top: 30px">
         <div class="title">Выбор квеста</div>
         <div class="text">Выбирай первый понравившийся и погнали!</div>
     </div>
-    <div id="quests-listing">
+    <div id="quests-listing" style="overflow-x: hidden">
     </div>
 </div>
 
-<div id="confirm" style="display: none">
+<div id="confirm" style="display: block; opacity: 0%; right: -100%; transition: all 1s ease; position: absolute; width: 100%">
     <div id="back-button" class="fullwidth left-item text-big listing-item" style="margin: 30px 0 0 0; padding: 20px; display: block">
         <span class="text" style="margin: 0 30px"><arrow class="arrow left" style="margin-right: 10px; display: inline-block; opacity: 100%"></arrow>НАЗАД</span>
     </div>
     <div class="left-item bg-left" style="text-align: center; padding: 20px; margin-top: 30px">
-        <div class="title">Квест: <span class="title-big" id="quest-confirm-title"></span></div>
-        <div class="title">Ветка: <span class="title-big" id="branch-confirm-title"></span></div>
+        <div class="text-big">Квест: <span class="title-big" id="quest-confirm-title"></span></div>
+        <div class="text-big">Ветка: <span class="title-big" id="branch-confirm-title"></span></div>
         <div class="title" style="margin-top: 30px">Ты уверен?</div>
         <div class="text">Весь прогресс в уже выбранной ветке квеста будет сброшен.</div>
     </div>
@@ -40,7 +40,7 @@ export function source(element, router) {
         listing.innerHTML = "";
         for (let i = 0; i < response.length; i++) {
             listing.innerHTML += `<div>
-                                    <questButton data-quest-id="${i}" href="/branch" class="fullwidth left-item text-big listing-item" style="padding: 20px; display: inline-block">
+                                    <questButton data-quest-id="${i}" href="/branch" class="fullwidth left-item text-big listing-item p20" style="display: block">
                                         ${response[i]}
                                         <span class="text choose" style="margin: 0 30px">ВЫБРАТЬ<arrow class="arrow right" style="margin-left: 10px; display: inline-block;"></arrow></span>
                                     </questButton>
@@ -79,10 +79,10 @@ export function source(element, router) {
 
                             document.querySelectorAll("branchButton").forEach((branchButton) => {
                                 branchButton.addEventListener("click", (event) => {
-                                    document.getElementById("choose-quest").style.display = "none";
-                                    //document.getElementById("choose-quest").style.opacity = "0%";
-                                    document.getElementById("confirm").style.display = "block";
-                                    //document.getElementById("confirm").style.opacity = "100%";
+                                    document.getElementById("choose-quest").style.opacity = "0%";
+                                    document.getElementById("choose-quest").style.left = "-100%";
+                                    document.getElementById("confirm").style.opacity = "100%";
+                                    document.getElementById("confirm").style.right = "0%";
                                     choosedBranchId = branchButton.getAttribute("data-branch-id");
                                     branchTitle = branchButton.firstChild.textContent;
                                     let quest = branchButton.parentElement.parentElement.firstElementChild;
@@ -108,10 +108,10 @@ export function source(element, router) {
     });
 
     document.getElementById("back-button").addEventListener("click", (event) => {
-        document.getElementById("choose-quest").style.display = "block";
-        //document.getElementById("choose-quest").style.opacity = "100%";
-        document.getElementById("confirm").style.display = "none";
-        //document.getElementById("confirm").style.opacity = "0%";
+        document.getElementById("choose-quest").style.opacity = "100%";
+        document.getElementById("choose-quest").style.left = "0%";
+        document.getElementById("confirm").style.opacity = "0%";
+        document.getElementById("confirm").style.right = "-100%";
     });
 
     document.getElementById("confirm-button").addEventListener("click", (event) => {

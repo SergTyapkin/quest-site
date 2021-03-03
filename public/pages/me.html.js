@@ -26,7 +26,7 @@ const html = `
             <input class="p10" style="width: 80%" type="password" id="password-form" placeholder="Старый пароль">
             <input class="submit p10" style="color: #deb77a; display: inline" type="submit" value="Сменить" id="button-password-form">
         </div>
-        <div id="new-password-block" style="opacity: 0%; padding-bottom: 20px; height: 0; overflow: hidden; transition: all 1s ease-out">
+        <div id="new-password-block" style="opacity: 0%; padding-bottom: 20px; height: 0; overflow-x: hidden; transition: all 1s ease-out">
             <div class="error" id="newPasswordError"></div>
             <input class="p10 fullwidth mtb10" type="password" id="new-password-form" placeholder="Новый пароль">
             <div class="success" id="completePasswordChange"></div>

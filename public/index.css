@@ -1,14 +1,16 @@
 body {
     margin: 0;
     padding-bottom: 60px;
-    width: 100%;
+    max-width: 100vw;
+    width: 100vw;
     min-height: 100vh;
     position: relative;
     color: #fff;
-    background: linear-gradient(-20deg, #b8860b 0%, #000000 70%) no-repeat;
+    background: linear-gradient(-20deg, #b8860b 0%, #000000 70%);
     background-size: 10000%;
     animation: load-out 3s ease normal forwards;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 #body {
     opacity: 0%;
