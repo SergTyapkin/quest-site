@@ -1,7 +1,11 @@
 import {ajax} from "./../ajax.js";
 
 const html = `
-<div class="form text">
+<linkButton href="/play" class="fullwidth left-item text-big listing-item p20" style="position: relative; display: block; margin: 50px auto 0 auto; background: linear-gradient(160deg, rgba(188,116,39, 0.3) 0%, rgba(31,26,9,0.2) 100%) 50% 50% no-repeat">
+    <!--linkButton class="left-item choose" href="/play" style="border-radius: 10px; background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(84,69,25,0.7) 100%) 50% 50% no-repeat">К квесту</linkButton-->
+    <span class="title choose" style="margin: 0 30px; opacity: 100%"><span class="arrow left" style="display: inline-block"></span>К квесту</span>
+</linkButton>
+<div class="form text" style="margin-top: 20px">
     <div class="center">
         <div class="title">Твой профиль</div>
     </div>
@@ -23,8 +27,8 @@ const html = `
     <form id="form-password">
         <div>
             <div><label class="text-big" style="font-family: Arial">ПАРОЛЬ <span class="error" id="passwordError"></span></label></div>
-            <input class="p10" style="width: 80%" type="password" id="password-form" placeholder="Старый пароль">
-            <input class="submit p10" style="color: #deb77a; display: inline" type="submit" value="Сменить" id="button-password-form">
+            <input class="p10" style="width: 78%; display: inline"" type="password" id="password-form" placeholder="Старый пароль">
+            <input class="submit p10" style="width: 20%; font-size: 1em; color: #deb77a; display: inline" type="submit" value="Сменить" id="button-password-form">
         </div>
         <div id="new-password-block" style="opacity: 0%; padding-bottom: 20px; height: 0; overflow-x: hidden; transition: all 1s ease-out">
             <div class="error" id="newPasswordError"></div>
@@ -37,13 +41,10 @@ const html = `
         </div>
     </form>
 </div>
-<div style="position: relative; text-align: center; margin: 30px">
-    <linkButton class="submit p10" href="/play" style="border-radius: 10px; background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(84,69,25,0.7) 100%) 50% 50% no-repeat">К квесту</linkButton>
-</div>
 `;
 
 export function source(element, router) {
-    document.title = "Мой профиль";
+    document.title = "SQuest | Профиль";
     element.innerHTML = html;
 
     document.getElementById("form-data").addEventListener("submit", (event) => {
@@ -83,7 +84,7 @@ export function source(element, router) {
                     document.getElementById("passwordError").innerText = "";
                 } else { // invalide
                     document.getElementById("button-password-form").style.display = "inline";
-                    document.getElementById("password-form").style.width = "80%";
+                    document.getElementById("password-form").style.width = "78%";
                     document.getElementById("password-form").removeAttribute("disabled");
                     newPasswordBlock.style.height = "0";
                     newPasswordBlock.style.opacity = "0%";

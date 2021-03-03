@@ -2,7 +2,9 @@ import {ajax} from "./../ajax.js";
 
 const html = `
 <div class="left-item bg-left" style="padding: 20px; margin-top: 30px">
-    <div class="title" id="task-title"></div>
+    <div class="text">Квест: <span id="quest-title"></span></div>
+    <div class="text">Ветка: <span id="branch-title"></span></div>
+    <div class="title" style="margin-top: 10px" id="task-title"></div>
 </div>
 <div class="text-big m20" id="task-description"></div>
 
@@ -22,7 +24,7 @@ const html = `
 `;
 
 export function source(element, router) {
-    document.title = "Выбор ветки";
+    document.title = "SQuest | Квест";
     element.innerHTML = html;
 
     ajax('GET', '/api/play', null, (status, response) => {
@@ -36,6 +38,8 @@ export function source(element, router) {
         document.getElementById("progress").innerText = response.progress;
         document.getElementById("progressbar").style.backgroundPositionX = `${100 - 100 / response.len * response.progress}%`;
 
+        document.getElementById("quest-title").innerHTML = response.questTitle;
+        document.getElementById("branch-title").innerHTML = response.branchTitle;
         document.getElementById("task-title").innerHTML = response.title;
         document.getElementById("task-description").innerHTML = response.description;
         document.getElementById("task-question").innerHTML = response.question;

@@ -30,7 +30,7 @@ const html = `
 `;
 
 export function source(element, router) {
-    document.title = "Регистрация";
+    document.title = "SQuest | Регистрация";
     element.innerHTML = html;
     document.getElementById("nickname-form").focus();
 

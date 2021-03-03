@@ -16,9 +16,6 @@ body {
     opacity: 0%;
     transition: all 200ms ease;
 }
-#body.loaded-animation {
-    opacity: 100%;
-}
 
 @keyframes load-in {
     from {
@@ -351,7 +348,7 @@ linkButton {
 
 .choose {
     opacity: 30%;
-    text-shadow: none;
+    text-shadow: 0 0 3px #e9c988;
     transition: all 0.5s ease-out;
     transition-delay: 50ms;
 }

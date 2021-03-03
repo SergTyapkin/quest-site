@@ -45,6 +45,6 @@ const html = `
 `;
 
 export function source(element, router) {
-    document.title = "О нас";
+    document.title = "SQuest | О нас";
     element.innerHTML = html;
 }

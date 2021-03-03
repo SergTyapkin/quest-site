@@ -4,9 +4,9 @@ export default class Router {
     linkedButtons;
 
     constructor() {
-        window.onpopstate = ((event) => {
+        /*window.onpopstate = ((event) => {
             event.preventDefault();
-        });
+        });*/
 
         this.linkButtons();
     }
@@ -22,21 +22,19 @@ export default class Router {
     }
 
     relinkButtons() {
-        /*this.linkedButtons.forEach((button) => {
-            console.log("Remove link: " + button.innerHTML);
-            const parent = button.parentElement;
-            //console.log("Remove parent: " + parent.innerHTML);
+        this.linkedButtons.forEach((button) => {
+            //button.outerHTML = button.outerHTML.toString();
+            //console.log("Remove link: " + button.innerHTML);
             button.removeEventListener("click", (event) => {
                 this.linksListener(event);
             });
-        })*/
-        //document = document.cloneNode();
+        })
+        //document.innerHTML = document.documentElement.innerHTML;
         this.linkButtons();
     }
 
     linksListener(event) {
         event.preventDefault();
-        console.log(event.currentTarget.innerHTML.toString());
         this.goto(event.currentTarget.getAttribute("href").toString());
     }
 

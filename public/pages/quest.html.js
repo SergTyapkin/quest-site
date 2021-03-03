@@ -10,9 +10,9 @@ const htmlQuests = `
     </div>
 </div>
 
-<div id="confirm" style="display: block; opacity: 0%; right: -100%; transition: all 1s ease; position: absolute; width: 100%">
+<div id="confirm" style="display: block; opacity: 0%; right: -100%; transition: all 1s ease; position: absolute; width: 100%; overflow-x: hidden">
     <div id="back-button" class="fullwidth left-item text-big listing-item" style="margin: 30px 0 0 0; padding: 20px; display: block">
-        <span class="text" style="margin: 0 30px"><arrow class="arrow left" style="margin-right: 10px; display: inline-block; opacity: 100%"></arrow>НАЗАД</span>
+        <span class="title choose" style="margin: 0 30px"><arrow class="arrow left" style="margin-right: 10px; display: inline-block; opacity: 100%"></arrow>Назад</span>
     </div>
     <div class="left-item bg-left" style="text-align: center; padding: 20px; margin-top: 30px">
         <div class="text-big">Квест: <span class="title-big" id="quest-confirm-title"></span></div>
@@ -31,7 +31,7 @@ export function source(element, router) {
     let choosedQuestId, choosedBranchId;
     let questTitle, branchTitle;
 
-    document.title = "Выбор квеста";
+    document.title = "SQuest | Выбор квеста";
     element.innerHTML = htmlQuests;
 
     ajax('GET', '/api/quest', null, (status, response) => {

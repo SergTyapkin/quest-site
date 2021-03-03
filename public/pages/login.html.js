@@ -25,7 +25,7 @@ const html = `
 `;
 
 export function source(element, router) {
-    document.title = "Логин";
+    document.title = "SQuest | Логин";
     element.innerHTML = html;
     document.getElementById("nickname-form").focus();
 

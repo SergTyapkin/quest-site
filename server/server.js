@@ -13,7 +13,6 @@ const fs = require('fs');
 const app = express();
 
 app.use(morgan('dev'));
-app.use(express.static(path.resolve(__dirname, '..', 'public')));
 app.use(body.json());
 app.use(cookie());
 
@@ -24,17 +23,17 @@ const quests = [
 ];
 
 const users = {
-    'tyapkin': {
-        nickname: 'tyapkin',
+    'Sergey': {
+        nickname: 'Sergey',
         email: 'tyapkin2002@mail.ru',
         password: 'password',
         quest: undefined,
         branch: undefined,
-        progress: undefined,
+        progress: 0,
         rating: 0,
     },
-    'sererga': {
-        nickname: 'sererga',
+    'TyapkinS': {
+        nickname: 'TyapkinS',
         email: 'sererga115@gmail.com',
         password: 'password',
         quest: undefined,
@@ -49,8 +48,8 @@ const users = {
         quest: 0,
         branch: 0,
         progress: 0,
-        rating: 0,
-    }
+        rating: 100,
+    },
 };
 const nicks = {};
 
@@ -71,6 +70,9 @@ app.get('/api/play', (req, res) => {
     else
         Object.assign(task, branch.tasks[user.progress]);
     delete task.answers;
+
+    task.questTitle = quests[user.quest].title;
+    task.branchTitle = quests[user.quest].branches[user.branch].title;
 
     task.progress = user.progress;
     task.len = branch.tasks.length;
@@ -106,7 +108,7 @@ app.post('/api/branch', (req, res) => {
     res.status(200).json(branches);
 });
 
-app.post('/api/quest', (req, res) => {
+app.post('/api/quests', (req, res) => {
     const id = req.cookies['userId'];
     if (!(id in nicks))
         return res.status(400).json({answerError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
@@ -264,16 +266,35 @@ app.get('/api/users', (req, res) => {
     res.status(200).json(users).end();
 });
 
+app.get('/api/quests', (req, res) => {
+    res.status(200).json(quests).end();
+});
+
 app.get('/redirect.js', (req, res) => {
     console.log("REDIRECT");
-    fs.readFile('D:\\Documents\\C++\\Sites\\quest-site\\public\\pages\\play.html.js', (err, data) => {
-        res.send(data.toString());
+    fs.readFile(__dirname.slice(0, -6) +  '\\public\\redirect.js', (err, data) => {
+        data = data.toString();
+        data += '\n router.goto(' + req.baseUrl.toString() + '); \n';
+
+        console.log(data);
+        console.log('BaseUrl: ' + req.baseUrl);
+        res.type('application/javascript; charset=UTF-8');
+        res.send(data);
     });
 });
 
+app.use(express.static(path.resolve(__dirname, '..', 'public')));
+
 app.get('/*', (req, res) => {
-    fs.readFile('D:\\Documents\\C++\\Sites\\quest-site\\public\\redirect.html', (err, data) => {
-        res.send(data.toString());
+    fs.readFile(__dirname.slice(0, -6) +  '\\public\\redirect.html', (err, data) => {
+        data = data.toString();
+        data += '    router.goto("' + req.originalUrl + '");\n' +
+            '</script>\n' +
+            '</body>\n' +
+            '</html>'
+
+        res.type('text/html; charset=UTF-8');
+        res.send(data);
     });
 });
 

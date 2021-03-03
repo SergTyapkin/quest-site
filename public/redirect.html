@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,10 +26,15 @@
     </li>
 </ul>
 
-<div id="body" class="title">This is loading page...</div>
+<div id="body" class="title">This is REDIRECT loading page...</div>
 <!--a href="/login"><linkButton>This is button</linkButton></a-->
 
-<script type="module" src="redirect.js"></script>
-</body>
+<script type="module">
+    import Router from "./router.js";
+    import {ajax} from "./ajax.js";
 
-</html>
+    const router = new Router();
+
+    // there will be
+    // router.goto("/some_page");
+
