@@ -19,7 +19,7 @@ app.use(cookie());
 
 
 const quests = [
-    //bumonka.quest,
+    bumonka.quest,
     testQuest.quest,
 ];
 
