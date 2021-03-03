@@ -22,15 +22,15 @@ export default class Router {
     }
 
     relinkButtons() {
-        this.linkedButtons.forEach((button) => {
+        /*this.linkedButtons.forEach((button) => {
             console.log("Remove link: " + button.innerHTML);
             const parent = button.parentElement;
             //console.log("Remove parent: " + parent.innerHTML);
-            //parent.innerHTML = parent.innerHTML;
             button.removeEventListener("click", (event) => {
                 this.linksListener(event);
             });
-        })
+        })*/
+        document.innerHTML = document.innerHTML.toString;
         this.linkButtons();
     }
 

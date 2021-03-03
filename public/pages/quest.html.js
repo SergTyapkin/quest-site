@@ -30,7 +30,6 @@ const htmlQuests = `
 export function source(element, router) {
     let choosedQuestId, choosedBranchId;
     let questTitle, branchTitle;
-    let pageClone;
 
     document.title = "Выбор квеста";
     element.innerHTML = htmlQuests;
@@ -73,7 +72,7 @@ export function source(element, router) {
                                                                 </branchButton>`;
                                 }
                             } else { // invalide
-                                //router.goto("/login");
+                                router.goto("/quest");
                             }
                             branchesBlock.style.height = `${branchesBlock.scrollHeight}px`;
 
