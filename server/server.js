@@ -270,23 +270,10 @@ app.get('/api/quests', (req, res) => {
     res.status(200).json(quests).end();
 });
 
-app.get('/redirect.js', (req, res) => {
-    console.log("REDIRECT");
-    fs.readFile(__dirname.slice(0, -6) +  '\\public\\redirect.js', (err, data) => {
-        data = data.toString();
-        data += '\n router.goto(' + req.baseUrl.toString() + '); \n';
-
-        console.log(data);
-        console.log('BaseUrl: ' + req.baseUrl);
-        res.type('application/javascript; charset=UTF-8');
-        res.send(data);
-    });
-});
-
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
 
 app.get('/*', (req, res) => {
-    fs.readFile(__dirname.slice(0, -6) +  '\\public\\redirect.html', (err, data) => {
+    fs.readFile(path.resolve(__dirname, '..', 'public', 'redirect.html'), (err, data) => {
         data = data.toString();
         data += '    router.goto("' + req.originalUrl + '");\n' +
             '</script>\n' +
