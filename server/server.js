@@ -16,6 +16,7 @@ app.use(morgan('dev'));
 app.use(body.json());
 app.use(cookie());
 
+let answerAll = "000";
 
 const quests = [
     bumonka.quest,
@@ -36,8 +37,8 @@ const users = {
         nickname: 'TyapkinS',
         email: 'sererga115@gmail.com',
         password: 'password',
-        quest: -1,
-        branch: -1,
+        quest: undefined,
+        branch: undefined,
         progress: 0,
         rating: 0,
     },
@@ -60,7 +61,7 @@ app.get('/api/play', (req, res) => {
     const user = users[nicks[id]];
     console.log(user);
 
-    if (typeof user.quest === "undefined" || typeof user.branch === "undefined")
+    if ((typeof user.quest === "undefined") || (typeof user.branch === "undefined"))
         return res.status(401).json({answerError: 'Квест не выбран.'});
 
     const branch = quests[user.quest].branches[user.branch];
@@ -108,7 +109,7 @@ app.post('/api/branch', (req, res) => {
     res.status(200).json(branches);
 });
 
-app.post('/api/quests', (req, res) => {
+app.post('/api/quest', (req, res) => {
     const id = req.cookies['userId'];
     if (!(id in nicks))
         return res.status(400).json({answerError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
@@ -145,7 +146,7 @@ app.post('/api/register', (req, res) => {
         if (userData.email === email)
             return res.status(400).json({emailError: 'На этот email уже зарегистрирован пользователь "' + userData.nickname + '"'});
 
-    users[nickname] = {nickname, password, email, branch: undefined, progress: 0};
+    users[nickname] = {nickname, password, email, quest: undefined, branch: undefined, progress: 0, rating: 0};
     const id = uuid.v4();
     nicks[id] = nickname;
 
@@ -181,7 +182,7 @@ app.get('/api/me', (req, res) => {
     const user = {};
     Object.assign(user, users[nickname]);
     delete user.password;
-    if (typeof user.quest !== "undefined" && typeof user.branch !== "undefined")
+    if ((typeof user.quest !== "undefined") && (typeof user.branch !== "undefined"))
         user.len = quests[user.quest].branches[user.branch].tasks.length;
 
     res.status(200).json(user).end();
@@ -218,7 +219,7 @@ app.post('/api/me/change-data', (req, res) => {
         return res.status(400).json({nicknameError: 'Зачем кнопку теребишь, если не поменял ничего?', emailError: ''});
 
     delete users[nicks[id]];
-    users[nickname] = {nickname, prevPassword, email, branch: undefined, progress: 0}; // create new user
+    users[nickname] = {nickname, prevPassword, email, quest: undefined, branch: undefined, progress: 0, rating: 0}; // create new user
     nicks[id] = nickname;
 
     res.cookie('userId', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
@@ -268,6 +269,25 @@ app.get('/api/users', (req, res) => {
 
 app.get('/api/quests', (req, res) => {
     res.status(200).json(quests).end();
+});
+
+
+app.get('/quest/bonuspage', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({nicknameError: 'Не авторизован'});
+    const user = users[nicks[id]];
+
+    if (typeof user.branch === "undefined")
+        return res.status(401).json({nicknameError: 'Не выбрана ветка'});
+
+    //res.status(200).json({title: "Последний этап пройден!", description: path.resolve(__dirname, 'quests', 'branch' + user.branch + '.txt')}).end();
+    res.status(200).json({title: "Последний этап пройден!", description: 'Ты получил ответ: String(answerAll).substr(user.branch, 1). Возможно, вместе с другими ветками вы сможете достичь большего'}).end();
+});
+
+app.post('/quest/bonuspage', (req, res) => {
+    answerAll = req.body.answer;
+    res.status(200).end();
 });
 
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
