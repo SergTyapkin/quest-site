@@ -264,15 +264,15 @@ app.get('/api/users', (req, res) => {
     res.status(200).json(users).end();
 });
 
-
-app.get('/*', (req, res) => {
-    fs.readFile('D:\\Documents\\C++\\Sites\\quest-site\\public\\redirect.html', (err, data) => {
+app.get('/redirect.js', (req, res) => {
+    console.log("REDIRECT");
+    fs.readFile('D:\\Documents\\C++\\Sites\\quest-site\\public\\pages\\play.html.js', (err, data) => {
         res.send(data.toString());
     });
 });
 
-app.get('/redirect.js', (req, res) => {
-    fs.readFile('D:\\Documents\\C++\\Sites\\quest-site\\public\\pages\\play.html.js', (err, data) => {
+app.get('/*', (req, res) => {
+    fs.readFile('D:\\Documents\\C++\\Sites\\quest-site\\public\\redirect.html', (err, data) => {
         res.send(data.toString());
     });
 });

@@ -36,9 +36,9 @@ export function source(element, router) {
         document.getElementById("progress").innerText = response.progress;
         document.getElementById("progressbar").style.backgroundPositionX = `${100 - 100 / response.len * response.progress}%`;
 
-        document.getElementById("task-title").innerText = response.title;
-        document.getElementById("task-description").innerText = response.description;
-        document.getElementById("task-question").innerText = response.question;
+        document.getElementById("task-title").innerHTML = response.title;
+        document.getElementById("task-description").innerHTML = response.description;
+        document.getElementById("task-question").innerHTML = response.question;
 
         if (!response.question) {
             document.getElementById("form").style.display = "none";

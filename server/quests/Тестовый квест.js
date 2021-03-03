@@ -8,11 +8,11 @@ const quest = {
             tasks: [
                 {
                     title: 'Не вопрос, а ВОПРОСИЩЕ',
-                    description: 'Очень сложный вопрос',
+                    description: 'Очень сложный <br> вопроc',
                     question: 'Хто я?',
                     answers: [
                         'ans1', 'ans2', 'ans5',
-                    ]
+                    ],
                 },
                 {
                     title: 'Пфф, фигня вопрос',
@@ -20,7 +20,7 @@ const quest = {
                     question: 'В чем смысл?',
                     answers: [
                         'no', 'yes',
-                    ]
+                    ],
                 },
             ],
             final: {

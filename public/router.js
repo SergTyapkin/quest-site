@@ -30,7 +30,7 @@ export default class Router {
                 this.linksListener(event);
             });
         })*/
-        document.innerHTML = document.innerHTML.toString;
+        //document = document.cloneNode();
         this.linkButtons();
     }
 
