@@ -3,10 +3,10 @@ import {ajax} from "./../ajax.js";
 const html = `
 <div class="fullwidth" style="position: absolute; margin-top: -100px">
     <linkButton href="/play" class="left-item text-big listing-item ptb20 double-item-left" style="position: absolute; display: block; background: linear-gradient(160deg, rgba(188,116,39, 0.3) 0%, rgba(31,26,9,0.2) 100%) 50% 50% no-repeat">
-        <span class="title choose" style="margin: 0 30px; opacity: 100%"><span class="arrow left" style="display: inline-block"></span>К квесту</span>
+        <span class="title choose" style="margin: 0 30px; opacity: 100%; font-size: 20px"><span class="arrow left" style="display: inline-block"></span>К квесту</span>
     </linkButton>
     <linkButton href="/rating" class="right-item text-big listing-item ptb20 double-item-right" style="position: absolute; display: block; background: linear-gradient(160deg, rgba(188,116,39, 0.3) 0%, rgba(31,26,9,0.2) 100%) 50% 50% no-repeat">
-        <span class="title choose" style="margin: 0 30px; opacity: 100%">Рейтинг<span class="arrow right" style="display: inline-block"></span></span>
+        <span class="title choose" style="margin: 0 30px; opacity: 100%; font-size: 20px">Рейтинг<span class="arrow right" style="display: inline-block"></span></span>
     </linkButton>
 </div>
 <div class="form text" style="margin-top: 150px">
