@@ -136,7 +136,7 @@ linkButton {
     bottom: 10px;
     width: 100%;
     height: 5px;
-    background: linear-gradient(90deg, rgba(218, 165, 32, 0.7) 53%, rgba(0, 0, 0, 0.5) 56%) 0 0 no-repeat;
+    background: linear-gradient(90deg, rgba(218, 165, 32, 0.7) 50%, rgba(0, 0, 0, 0.5) 53%) 0 0 no-repeat;
     background-position-x: 0%;
     background-size: 200%;
     box-shadow: rgba(231, 190, 28, 0.7) 0 0 5px 0;
@@ -237,28 +237,6 @@ linkButton {
     animation: open-navbar 3s ease forwards;
 }
 
-.underbar input {
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-    height: 40px;
-    margin-left: 30px;
-    position: absolute;
-    horiz-align: center;
-    vertical-align: center;
-    background: linear-gradient(90deg, rgba(126, 102, 37, 0.7) 0%, rgba(71, 56, 20, 0.4) 100%) 50% 50% no-repeat;
-}
-
-.underbar button {
-    border-top-left-radius: 40px;
-    border-top-right-radius: 100px 40px;
-    height: 40px;
-    width: 60px;
-    left: 0;
-    position: absolute;
-    vertical-align: center;
-    background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(126, 102, 37, 0.7) 100%) 50% 50% no-repeat;
-}
-
 .center {
     margin: 10px auto 10px auto;
     text-align: center;
@@ -332,8 +310,6 @@ linkButton {
 .listing-item:hover {
     box-shadow: 0 0 20px 0 rgba(198, 165, 91, 0.8), 0 0 10px 0 rgba(59, 50, 17, 0.3) inset;
     color: #ffeae0;
-    padding-left: 20px;
-    padding-right: 20px;
     letter-spacing: 2px;
     transition: all 0.4s ease;
     text-shadow: 0 0 50px #f5f0f0, 0 0 10px #eaacbf, 0 0 15px #eaa093;
@@ -344,6 +320,23 @@ linkButton {
     transition-delay: 200ms;
     opacity: 100%;
     text-shadow: 0 0 8px #e7bfac;
+}
+
+.double-item-left {
+    width: 50%;
+    transition: all 0.5s ease;
+}
+.double-item-right {
+    width: 50%;
+    transition: all 0.5s ease;
+}
+.double-item-left:hover {
+    width: 70%;
+    transition: all 0.5s ease;
+}
+.double-item-left:hover ~ .double-item-right {
+    width: 30%;
+    transition: all 0.5s ease;
 }
 
 .choose {
@@ -374,6 +367,13 @@ linkButton {
     transition: all 0.5s ease-out;
 }
 
+.image-big {
+    max-width: 50%;
+    max-height: 100vh;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 rgba(162, 116, 14, 0.8), 0 0 15px 0 rgba(34, 28, 4, 0.5) inset;
+}
+
 .fullwidth {
     width: 100%;
 }
@@ -392,6 +392,9 @@ linkButton {
 }
 .m0 {
     margin: 0;
+}
+.ptb20 {
+    padding: 20px 0;
 }
 .p20 {
     padding: 20px;

@@ -16,8 +16,8 @@ const html = `
         <div class="mtb20"><input class="submit fullwidth center p10" style="border-color: #b08946; outline: none" type="submit" value="Изменить"></div>
     </div>
 </form>
-<div id="new-quest-button" style="position: relative; text-align: center; margin: 30px; display: none">
-    <linkButton class="submit p10" href="/quest" style="border-radius: 10px; background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(84,69,25,0.7) 100%) 50% 50% no-repeat">Выбрать новый квест</linkButton>
+<div style="position: relative; text-align: center; margin: 30px">
+    <linkButton class="submit p10" href="/about" style="border-radius: 10px; background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(84,69,25,0.7) 100%) 50% 50% no-repeat">На главную</linkButton>
 </div>
 `;
 
@@ -29,7 +29,7 @@ export function source(element, router) {
         event.preventDefault();
         const answer = document.getElementById("answer-form").value.trim();
 
-        ajax("POST", "/quest/bonuspage", {answer}, (status, response) => {
+        ajax("POST", "/api/admin/set-answer-all", {answer}, (status, response) => {
             if (status == 200) { // valide
                 document.getElementById("answerError").style.color = "#bfde3d";
                 document.getElementById("answerError").innerText = "Успешно изменено";

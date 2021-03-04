@@ -1,6 +1,6 @@
 import {ajax} from "./../ajax.js";
 
-const htmlQuests = `
+const html = `
 <div id="choose-quest" style="transition: all 1s ease; left: 0%; position: absolute; width: 100%">
     <div class="left-item bg-left" style="padding: 20px; margin-top: 30px">
         <div class="title">Выбор квеста</div>
@@ -32,7 +32,7 @@ export function source(element, router) {
     let questTitle, branchTitle;
 
     document.title = "SQuest | Выбор квеста";
-    element.innerHTML = htmlQuests;
+    element.innerHTML = html;
 
     ajax('GET', '/api/quest', null, (status, response) => {
         const listing = document.getElementById("quests-listing");

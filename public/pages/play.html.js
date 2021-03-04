@@ -21,11 +21,22 @@ const html = `
 <div id="new-quest-button" style="position: relative; text-align: center; margin: 30px; display: none">
     <linkButton class="submit p10" href="/quest" style="border-radius: 10px; background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(84,69,25,0.7) 100%) 50% 50% no-repeat">Выбрать новый квест</linkButton>
 </div>
+
+<ul class="underbar-contacts" id="underbar-contacts">
+    <!--div><li style="padding: 0px 0 0px 10px">
+        <span>Контакты</span>
+    </li></div-->
+    <li>
+        <span class="title" style="font-size: 18px; font-family: Arial; margin-right: 10px">За подсказками:</span>
+        <span><a href="https://vk.com/squest_studio" target="_blank" style="color: inherit; text-shadow: 0 0 8px #c3a38e">vk.com/squest_studio</a></span>
+    </li>
+</ul>
 `;
 
 export function source(element, router) {
     document.title = "SQuest | Квест";
     element.innerHTML = html;
+    document.getElementById("body").style.paddingBottom = `${document.getElementById("underbar-contacts").scrollHeight}px`;
 
     ajax('GET', '/api/play', null, (status, response) => {
         if (status == 200) // valide

@@ -1,11 +1,15 @@
 import {ajax} from "./../ajax.js";
 
 const html = `
-<linkButton href="/play" class="fullwidth left-item text-big listing-item p20" style="position: relative; display: block; margin: 50px auto 0 auto; background: linear-gradient(160deg, rgba(188,116,39, 0.3) 0%, rgba(31,26,9,0.2) 100%) 50% 50% no-repeat">
-    <!--linkButton class="left-item choose" href="/play" style="border-radius: 10px; background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(84,69,25,0.7) 100%) 50% 50% no-repeat">К квесту</linkButton-->
-    <span class="title choose" style="margin: 0 30px; opacity: 100%"><span class="arrow left" style="display: inline-block"></span>К квесту</span>
-</linkButton>
-<div class="form text" style="margin-top: 20px">
+<div class="fullwidth" style="position: absolute; margin-top: -100px">
+    <linkButton href="/play" class="left-item text-big listing-item ptb20 double-item-left" style="position: absolute; display: block; background: linear-gradient(160deg, rgba(188,116,39, 0.3) 0%, rgba(31,26,9,0.2) 100%) 50% 50% no-repeat">
+        <span class="title choose" style="margin: 0 30px; opacity: 100%"><span class="arrow left" style="display: inline-block"></span>К квесту</span>
+    </linkButton>
+    <linkButton href="/rating" class="right-item text-big listing-item ptb20 double-item-right" style="position: absolute; display: block; background: linear-gradient(160deg, rgba(188,116,39, 0.3) 0%, rgba(31,26,9,0.2) 100%) 50% 50% no-repeat">
+        <span class="title choose" style="margin: 0 30px; opacity: 100%">Рейтинг<span class="arrow right" style="display: inline-block"></span></span>
+    </linkButton>
+</div>
+<div class="form text" style="margin-top: 150px">
     <div class="center">
         <div class="title">Твой профиль</div>
     </div>
@@ -16,7 +20,7 @@ const html = `
         </div>
         <div class="mtb20">
             <div><label class="text-big" style="font-family: Arial">E-mail <span class="error" id="emailError"></span></label></div>
-            <input class="fullwidth p10" type="email" id="email-form">
+            <input class="fullwidth p10" type="text" id="email-form">
             <div class="text-small" style="padding: 5px 0 5px 0">Подтверждать придётся и со старой, и с новой</div>
         </div>
         <div class="mtb20">

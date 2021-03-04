@@ -22,13 +22,17 @@ const html = `
     <div class="text">Там снизу есть <span class="text-big">контакты</span> - пиши, не стестняйся.</div>
 </div>
 <div style="position: relative; text-align: center; margin: 30px">
-    <linkButton class="submit light p10" href="/register" style="background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(84,69,25,0.7) 100%) 50% 50% no-repeat">Регистрация</linkButton>
+    <linkButton class="submit light p10" href="/register" style="background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(84,69,25,0.7) 100%) 50% 50% no-repeat">Зарегистрироваться</linkButton>
 </div>
 
-<ul class="underbar-contacts">
+<ul class="underbar-contacts" id="underbar-contacts">
     <!--div><li style="padding: 0px 0 0px 10px">
         <span>Контакты</span>
     </li></div-->
+    <li>
+        <div class="title" style="font-size: 18px; font-family: Arial">За подсказками:</div>
+        <div><a href="https://vk.com/squest_studio" target="_blank" style="color: inherit; text-shadow: 0 0 8px #c3a38e">vk.com/squest_studio</a></div>
+    </li>
     <li>
         <div class="title" style="font-size: 18px; font-family: Arial">E-mail:</div>
         <div style="text-shadow: 0 0 8px #ba9b87">Tyapkin2002@mail.ru</div>
@@ -47,4 +51,5 @@ const html = `
 export function source(element, router) {
     document.title = "SQuest | О нас";
     element.innerHTML = html;
+    document.getElementById("body").style.paddingBottom = `${document.getElementById("underbar-contacts").scrollHeight}px`;
 }

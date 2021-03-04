@@ -16,7 +16,7 @@ app.use(morgan('dev'));
 app.use(body.json());
 app.use(cookie());
 
-let answerAll = "000";
+let answerAll = ['Nothing1', 'Nothing2', 'Nothing3'];
 
 const quests = [
     bumonka.quest,
@@ -24,15 +24,6 @@ const quests = [
 ];
 
 const users = {
-    'Sergey': {
-        nickname: 'Sergey',
-        email: 'tyapkin2002@mail.ru',
-        password: 'password',
-        quest: undefined,
-        branch: undefined,
-        progress: 0,
-        rating: 0,
-    },
     'TyapkinS': {
         nickname: 'TyapkinS',
         email: 'sererga115@gmail.com',
@@ -40,7 +31,7 @@ const users = {
         quest: undefined,
         branch: undefined,
         progress: 0,
-        rating: 0,
+        rating: 3,
     },
     '.': {
         nickname: '.',
@@ -48,8 +39,8 @@ const users = {
         password: '.',
         quest: 0,
         branch: 0,
-        progress: 0,
-        rating: 100,
+        progress: 3,
+        rating: 0,
     },
 };
 const nicks = {};
@@ -90,6 +81,7 @@ app.post('/api/play', (req, res) => {
         return res.status(400).json({answerError: 'Ответ неверный'});
 
     user.progress += 1;
+    user.rating += 1;
     res.status(200).end();
 });
 
@@ -271,24 +263,59 @@ app.get('/api/quests', (req, res) => {
     res.status(200).json(quests).end();
 });
 
+app.get('/api/rating', (req, res) => {
+    const rates = [];
+    for (const [, userData] of Object.entries(users)) {
+        rates.push({nickname: userData.nickname, rating: userData.rating});
+    }
+    rates.sort((a, b) => {
+        return b.rating - a.rating;
+    });
+    res.status(200).json({users: rates}).end();
+});
 
-app.get('/quest/bonuspage', (req, res) => {
+
+app.get('/api/quest_bonuspage', (req, res) => {
     const id = req.cookies['userId'];
     if (!(id in nicks))
-        return res.status(400).json({nicknameError: 'Не авторизован'});
+        return res.status(401).json({error: 'Бонус-страница недоступна, ведь ты не авторизован'});
     const user = users[nicks[id]];
 
-    if (typeof user.branch === "undefined")
-        return res.status(401).json({nicknameError: 'Не выбрана ветка'});
+    if ((typeof user.quest === "undefined") || (typeof user.branch === "undefined"))
+        return res.status(400).json({error: 'Бонус-страница недоступна, ведь выбрана ветка'});
 
-    //res.status(200).json({title: "Последний этап пройден!", description: path.resolve(__dirname, 'quests', 'branch' + user.branch + '.txt')}).end();
-    res.status(200).json({title: "Последний этап пройден!", description: 'Ты получил ответ: String(answerAll).substr(user.branch, 1). Возможно, вместе с другими ветками вы сможете достичь большего'}).end();
+    if (user.progress + 1 < quests[user.quest].branches[user.branch].tasks.length)
+        return res.status(400).json({error: 'Бонус-страница недоступна, ведь ветка ещё не пройдена до конца'});
+
+    res.status(200).json({title: "Последний этап пройден!", description: 'Ты получил ответ: ' + answerAll[user.branch] + '. Возможно, вместе с другими ветками вы сможете достичь большего'}).end();
 });
 
-app.post('/quest/bonuspage', (req, res) => {
-    answerAll = req.body.answer;
+
+
+
+app.post('/api/admin/set-answer-all', (req, res) => {
+    answerAll = req.body.answer.split(' ');
     res.status(200).end();
 });
+
+app.post('/api/admin/set-progress', (req, res) => {
+    const progress = req.body.progress;
+    const nickname = req.body.nickname;
+    if (!nickname)
+        return res.status(400).json({nicknameError: 'Тебе не кажется, что чего-то не хватает?'});
+    if (!progress)
+        return res.status(400).json({progressError: 'Тебе не кажется, что чего-то не хватает?'});
+    if (!users[nickname])
+        return res.status(400).json({nicknameError: 'Такого пользователя нет'});
+    if ((typeof users[nickname].quest === "undefined") || (typeof users[nickname].branch === "undefined"))
+        return res.status(400).json({nicknameError: 'Пользователь не выбрал ветку'});
+    if ((progress < 0) || (progress > quests[users[nickname].quest].branches[users[nickname].branch].tasks.length))
+        return res.status(400).json({progressError: 'Недопустимое значение'});
+
+    users[nickname].progress = parseInt(progress);
+    res.status(200).end();
+});
+
 
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
 

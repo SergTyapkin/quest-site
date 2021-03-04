@@ -18,7 +18,7 @@ const html = `
         </div>
         <div class="mtb20">
             <div><label class="text-big" style="font-family: Arial">E-mail <span class="error" id="emailError"></span></label></div>
-            <input class="fullwidth p10" type="email" id="email-form">
+            <input class="fullwidth p10" type="text" id="email-form">
             <div class="text-small" style="padding: 5px 0 5px 0">Когда-нибудь пароль придётся восстанавливать</div>
         </div>
         <div class="mtb20">

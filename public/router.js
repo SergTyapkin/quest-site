@@ -23,7 +23,7 @@ export default class Router {
 
     relinkButtons() {
         this.linkedButtons.forEach((button) => {
-            //button.outerHTML = button.outerHTML.toString();
+            button.outerHTML = button.outerHTML.toString();
             //console.log("Remove link: " + button.innerHTML);
             button.removeEventListener("click", (event) => {
                 this.linksListener(event);

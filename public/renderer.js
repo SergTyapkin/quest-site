@@ -4,7 +4,10 @@ import * as me from "./pages/me.html.js";
 import * as about from "./pages/about.html.js";
 import * as quest from "./pages/quest.html.js";
 import * as play from "./pages/play.html.js";
+import * as quest_bonuspage from "./pages/quest_bonuspage.html.js";
 import * as set_quest_answer from "./pages/set_quest_answer.html.js";
+import * as set_user_progress from "./pages/set_user_progress.html.js";
+import * as rating from "./pages/rating.html.js";
 
 export function render(target, path, router, callback) {
     const body = document.getElementById(target);
