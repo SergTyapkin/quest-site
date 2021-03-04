@@ -110,7 +110,7 @@ const quest = {
                     title: 'Задание №4',
                     description: `Удачи вам желаю сие место отыскать, <br>
                                   И номер в строчку ниже записать. <br>
-                                  <img src="images/2/4 окно.png" alt="фотка" class="image-big m20">`,
+                                  <img src="images/2/4 окно .png" alt="фотка" class="image-big m20">`,
                     question: 'Нужен номер',
                     answers: ['314'],
                 },
@@ -213,7 +213,7 @@ const quest = {
                 description: `На этом с вопросами всё, можно расслабиться. <br>
                               Но недавно мы наткнулись на фото, которое никак не давало нам покоя. <br>
                               Так вот мы решили, что вас тоже заинтересует это место. Где-то примерно в этом месте есть QR-код. В нём спрятано что-то интересное.
-                              <img src="images/1/8 QR.png" alt="фотка" class="image-big m20">`
+                              <img src="images/3/8 QR.png" alt="фотка" class="image-big m20">`
             },
         },
     ],
