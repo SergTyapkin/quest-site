@@ -11,10 +11,12 @@ body {
     position: relative;
     color: #fff;
     background: linear-gradient(-20deg, #b8860b 0%, #000000 70%);
-    background-size: 10000%;
+    /*background-position: 100%;
+    background-size: 1000%;*/
     animation: load-out 3s ease normal forwards;
     box-sizing: border-box;
     overflow-x: hidden;
+    transition: all 300ms ease;
 }
 #body {
     opacity: 0%;
@@ -148,14 +150,14 @@ linkButton {
 }
 
 .submit {
-    border: 1px solid;
-    border-color: #c3a17b;
+    border: 1px solid #c3a17b;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
     outline: rgb(141, 112, 60) solid 1px;
     outline-offset: 0px;
     text-shadow: none;
     transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
     cursor: pointer;
+    white-space: nowrap;
 }
 .submit.light {
     outline: none;
@@ -310,6 +312,7 @@ linkButton {
     box-shadow: 0 0 10px 0 rgba(162, 116, 14, 0.8), 0 0 15px 0 rgba(34, 28, 4, 0.5) inset;
     transition: all 0.5s ease-in;
     cursor: pointer;
+    white-space: nowrap;
 }
 .listing-item:hover {
     box-shadow: 0 0 20px 0 rgba(198, 165, 91, 0.8), 0 0 10px 0 rgba(59, 50, 17, 0.3) inset;
@@ -329,10 +332,16 @@ linkButton {
 .double-item-left {
     width: 50%;
     transition: all 0.5s ease;
+    position: absolute;
+    display: block;
+    background: linear-gradient(160deg, rgba(188,116,39, 0.3) 0%, rgba(31,26,9,0.2) 100%) 50% 50% no-repeat;
 }
 .double-item-right {
     width: 50%;
     transition: all 0.5s ease;
+    position: absolute;
+    display: block;
+    background: linear-gradient(320deg, rgba(188,116,39, 0.3) 0%, rgba(31,26,9,0.2) 100%) 50% 50% no-repeat;
 }
 .double-item-left:hover {
     width: 70%;
@@ -419,6 +428,6 @@ linkButton {
 
 @media (max-width: 1000px) {
     * {
-        transition-duration: 0.1s !important;
+        transition: opacity 0.3s !important;
     }
 }

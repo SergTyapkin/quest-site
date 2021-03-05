@@ -14,6 +14,7 @@ export function render(target, path, router, callback) {
     try {
         console.log("Render " + path.substring(1) + ".html");
         body.style.opacity = "0%";
+        //document.querySelector("body").style.backgroundPosition = `${Math.floor(35 + Math.random()*20)}%`; // random from 35% to 55%
         setTimeout(() => {
             eval(path.substring(1)).source(body, router);
             body.style.opacity = "100%";
@@ -22,5 +23,5 @@ export function render(target, path, router, callback) {
     } catch {
         console.log("Bad try to render " + path.substring(1) + ".html");
         body.innerHTML = "Error in \"" + path.substring(1) + ".html" + "\"";
-    }
+    };
 }
