@@ -43,7 +43,7 @@ export function source(element, router) {
                                         ${response[i]}
                                         <span class="text choose" style="margin: 0 30px">ВЫБРАТЬ<arrow class="arrow right" style="margin-left: 10px; display: inline-block;"></arrow></span>
                                     </questButton>
-                                    <div style="height: 0px; overflow: hidden; transition: all 0.5s ease-out"></div>
+                                    <div style="height: 0px; overflow: hidden; opacity: 0%; transition: all 0.5s ease-out"></div>
                                   </div>`;
         }
 
@@ -75,6 +75,7 @@ export function source(element, router) {
                                 router.goto("/quest");
                             }
                             branchesBlock.style.height = `${branchesBlock.scrollHeight}px`;
+                            branchesBlock.style.opacity = "100%";
 
                             document.querySelectorAll("branchButton").forEach((branchButton) => {
                                 branchButton.addEventListener("click", (event) => {
@@ -95,12 +96,14 @@ export function source(element, router) {
                         });
                     } else {  // getted already
                         branchesBlock.style.height = `${branchesBlock.scrollHeight}px`;
+                        branchesBlock.style.opacity = "100%";
                     };
                 } else { // pressed already
                     button.removeAttribute("data-pressed");
                     button.style.backgroundSize = "0%";
                     arrow.style.transform = "rotate(45deg)";
                     branchesBlock.style.height = "0px";
+                    branchesBlock.style.opacity = "0%";
                 }
             });
         });

@@ -4,6 +4,7 @@ const bumonka = require("./quests/8 марта. Бауманка.js");
 const testQuest = require("./quests/Тестовый квест.js");
 
 const express = require('express');
+//const https = require( "https" ); // для организации https
 const body = require('body-parser');
 const cookie = require('cookie-parser');
 const morgan = require('morgan');
@@ -45,6 +46,17 @@ const users = {
     },*/
 };
 const nicks = {};
+
+app.get("*", function (req, res, next) {
+
+    if ("https" !== req.headers["x-forwarded-proto"] && "production" === process.env.NODE_ENV) {
+        res.redirect("https://" + req.hostname + req.url);
+    } else {
+        // Continue to other routes if we're not redirecting
+        next();
+    }
+
+});
 
 app.get('/api/play', (req, res) => {
     const id = req.cookies['userId'];
@@ -470,6 +482,13 @@ app.get('/*', (req, res) => {
 
 const port = process.env.PORT || 8000;
 
-app.listen(port, function () {
+app.listen(port, () => {
     console.log(`Server listening port ${port}`);
 });
+
+/*const httpsOptions = {
+    key: fs.readFileSync("server.key"), // путь к ключу
+    cert: fs.readFileSync("server.crt") // путь к сертификату
+}*/
+
+//http.createServer(app).listen(8000);

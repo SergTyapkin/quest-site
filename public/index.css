@@ -428,6 +428,6 @@ linkButton {
 
 @media (max-width: 1000px) {
     * {
-        transition: opacity 0.3s !important;
+        transition: opacity 0.4s, transform 0.2s !important;
     }
 }
