@@ -42,6 +42,8 @@ export function source(element, router) {
 
         ajax("POST", "/api/register", {nickname, password, email}, (status, response) => {
             if (status == 200) { // valide
+                document.getElementById("nickname").innerText = nickname;
+                document.getElementById("me/login-button").setAttribute('href', '/me');
                 router.goto("/me");
             } else { // invalide
                 if (response.nicknameError)

@@ -4,6 +4,9 @@ const html = `
 <div class="left-item bg-left" style="padding: 20px; margin-top: 30px">
     <div class="title" style="margin-top: 10px" id="admin-title">Проверка доступа...</div>
 </div>
+<div><linkButton href="/me" class="fullwidth left-item text-big listing-item ptb20" style="margin-top: 50px; position: relative; display: block; background: linear-gradient(160deg, rgba(188,116,39, 0.3) 0%, rgba(31,26,9,0.2) 100%) 50% 50% no-repeat">
+    <span class="title choose" style="margin: 0 30px; opacity: 100%"><span class="arrow left" style="display: inline-block"></span>В профиль</span>
+</linkButton></div>
 
 <div id="admin-body" style="display: none" class="form">
     <form id="autofill-form">
@@ -30,7 +33,7 @@ const html = `
         </div>
         <div class="text">
             <div class="error" id="quest-questError"></div>
-            <div class="mtb20"><input class="fullwidth p10" type="text"  id="quest-quest-form"></div>
+            <div class="mtb20"><input class="fullwidth p10" type="text"  id="quest-quest-form" placeholder="ID квеста"></div>
         </div>
         <div class="text">
             <div class="success" id="quest-completeChange"></div>
@@ -48,7 +51,7 @@ const html = `
         </div>
         <div class="text">
             <div class="error" id="branch-branchError"></div>
-            <div class="mtb20"><input class="fullwidth p10" type="text"  id="branch-branch-form"></div>
+            <div class="mtb20"><input class="fullwidth p10" type="text"  id="branch-branch-form" placeholder="ID ветки"></div>
         </div>
         <div class="text">
             <div class="success" id="branch-completeChange"></div>
@@ -66,7 +69,7 @@ const html = `
         </div>
         <div class="text">
             <div class="error" id="progress-progressError"></div>
-            <div class="mtb20"><input class="fullwidth p10" type="text"  id="progress-progress-form"></div>
+            <div class="mtb20"><input class="fullwidth p10" type="text"  id="progress-progress-form" placeholder="Число прогресса"></div>
         </div>
         <div class="text">
             <div class="success" id="progress-completeChange"></div>
@@ -84,7 +87,7 @@ const html = `
         </div>
         <div class="text">
             <div class="error" id="admin-adminError"></div>
-            <div class="mtb20"><input class="fullwidth p10" type="text"  id="admin-admin-form"></div>
+            <div class="mtb20"><input class="fullwidth p10" type="text"  id="admin-admin-form" placeholder="false / true"></div>
         </div>
         <div class="text">
             <div class="success" id="admin-completeChange"></div>
@@ -133,7 +136,7 @@ export function source(element, router) {
 
     ajax("GET", "/api/admin", null, (status, response) => {
         if (status == 200) { // valide
-            document.getElementById("admin-title").innerText = "Админская страничка. Доступ получен";
+            document.getElementById("admin-title").innerText = "Админская страничка";
             document.getElementById("admin-body").style.display = "block";
         } else { // invalide
             if (response.nicknameError)
@@ -250,9 +253,9 @@ export function source(element, router) {
 
     document.getElementById("answerAll-form").addEventListener("submit", (event) => {
         event.preventDefault();
-        const nickname = document.getElementById("answerAll-nickname-form").value.trim();
+        const answer = document.getElementById("answerAll-answer-form").value.trim();
 
-        ajax("POST", "/api/admin/set-answer-all", {nickname}, (status, response) => {
+        ajax("POST", "/api/admin/set-answer-all", {answer}, (status, response) => {
             if (status == 200) { // valide
                 document.getElementById("answerAll-completeChange").innerText = "Успешно изменено";
             } else { // invalide

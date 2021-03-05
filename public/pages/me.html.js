@@ -9,6 +9,7 @@ const html = `
         <span class="title choose" style="margin: 0 30px; opacity: 100%; font-size: 20px">Рейтинг<span class="arrow right" style="display: inline-block"></span></span>
     </linkButton>
 </div>
+
 <div class="form text" style="margin-top: 150px">
     <div class="center">
         <div class="title">Твой профиль</div>
@@ -44,6 +45,10 @@ const html = `
             <linkButton id="logout-button" class="submit p10 fullwidth" href="/about" style="color: #d2c2ac; border-width: 1px; display: inline-block; box-sizing: border-box;" onclick="logout();">Выйти</linkButton>
         </div>
     </form>
+</div>
+
+<div id="admin-button" style="position: relative; text-align: center; margin: 30px; display: none">
+    <linkButton class="submit p10" href="/admin" style="border-radius: 10px; background: linear-gradient(90deg, rgba(71, 56, 20, 0.4) 0%, rgba(84,69,25,0.7) 100%) 50% 50% no-repeat">На админскую</linkButton>
 </div>
 `;
 
@@ -116,6 +121,12 @@ export function source(element, router) {
         if (status === 200) { // is authorized
             document.getElementById("nickname-form").value = response.nickname;
             document.getElementById("email-form").value = response.email;
+
+            ajax("GET", "/api/admin", null, (status, response) => {
+                if (status == 200) { // valide
+                    document.getElementById("admin-button").style.display = "block";
+                }
+            });
         } else { // not authorized
             //element.getElementById("error").innerText = response.error;
             router.goto("/login");

@@ -430,4 +430,7 @@ linkButton {
     * {
         transition: opacity 0.4s, transform 0.2s !important;
     }
+    #navbar linkbutton {
+        font-size: 20px;
+    }
 }

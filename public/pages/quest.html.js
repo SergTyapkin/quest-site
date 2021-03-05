@@ -63,12 +63,12 @@ export function source(element, router) {
                         button.setAttribute("data-getted", "yes");
                         ajax("POST", "/api/branch", {questId}, (status, response) => {
                             if (status == 200) { // valide
-                                branchesBlock.innerHTML = "";
+                                branchesBlock.innerHTML = ``;
                                 for (let i = 0; i < response.length; i++) {
                                     branchesBlock.innerHTML += `<branchButton data-branch-id="${i}" class="fullwidth left-item text-big listing-item" style="padding: 20px 20px 20px 40px; display: inline-block">
                                                                   ${response[i].title}
                                                                   <span class="text choose" style="margin: 0 30px">ВЫБРАТЬ<span class="arrow right" style="display: inline-block;"></span></span>
-                                                                  <div href="/play" class="text">${response[i].description}</div>
+                                                                  <div class="text">${response[i].description}</div>
                                                                 </branchButton>`;
                                 }
                             } else { // invalide

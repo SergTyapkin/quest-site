@@ -9,10 +9,9 @@ ajax("GET", "/api/me", {}, (status, response) => {
         document.getElementById("me/login-button").setAttribute('href', '/me');
         document.getElementById("progressbar").style.backgroundPositionX = `${100 - 100 / response.len * response.progress}%`;
         document.getElementById("progress").innerText = response.progress;
-        router.goto("/me");
     } else { // invalide
         document.getElementById("progressbar").style.backgroundPositionX = "100%";
         document.getElementById("me/login-button").setAttribute('href', '/login');
-        router.goto("/about");
     }
+    router.goto("/about");
 });

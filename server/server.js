@@ -140,7 +140,13 @@ app.post('/api/register', (req, res) => {
         return res.status(400).json({passwordError: 'А чё, а где пароль?'});
     if (!email)
         return res.status(400).json({emailError: 'А чё, а где email?'});
-    if (!password.match(/^\S{4,}$/))
+    if (nickname.length > 16)
+        return res.status(400).json({nicknameError: 'Уложи свой полёт фантазии в 16 символов пж'});
+    if (password.length > 30)
+        return res.status(400).json({passwordError: 'Длинновато. Больше 30 символов не влезет'});
+    if (email.length > 30)
+        return res.status(400).json({emailError: 'Длинновато. Больше 30 символов не влезет'});
+    if (password.length < 4)
         return res.status(400).json({passwordError: 'Пароль коротковат, надо хотя бы 4 с̶м̶ символа'});
     if (!email.match(/@/))
         return res.status(400).json({emailError: 'Не обманывай, email не настоящий.'});
@@ -209,6 +215,10 @@ app.post('/api/me/change-data', (req, res) => {
         return res.status(400).json({nicknameError: 'Пустое имя пользователя занято оригинальным админом'});
     if (!email)
         return res.status(400).json({emailError: 'Без email\'а нельзя'});
+    if (nickname.length > 16)
+        return res.status(400).json({nicknameError: 'Уложи свой полёт фантазии в 16 символов пж'});
+    if (email.length > 30)
+        return res.status(400).json({emailError: 'Длинновато. Больше 30 символов не влезет'});
     if (!email.match(/@/))
         return res.status(400).json({emailError: 'Не обманывай, email не настоящий'});
 
@@ -257,7 +267,9 @@ app.post('/api/me/change-password', (req, res) => {
 
     if (!newPassword)
         return res.status(400).json({newPasswordError: 'Без пароля нельзя'});
-    if (!newPassword.match(/^\S{4,}$/))
+    if (newPassword.length > 30)
+        return res.status(400).json({newPasswordError: 'Длинновато. Больше 30 символов не влезет'});
+    if (newPassword.length < 4)
         return res.status(400).json({newPasswordError: 'Пароль коротковат, надо хотя бы 4 с̶м̶ символа'});
 
     if (newPassword === password)
@@ -303,7 +315,7 @@ app.get('/api/admin', (req, res) => {
     if (!(id in nicks))
         return res.status(400).json({nicknameError: 'Не авторизован или сессия устарела. В доступе отказано'});
     if (!users[nicks[id]].admin)
-        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя. В доступе отказано'});
+        return res.status(400).json({nicknameError: 'Ты не админ. Таким сюда низя. В доступе отказано'});
 
     res.status(200).end();
 });
@@ -313,7 +325,7 @@ app.post('/api/admin/user', (req, res) => {
     if (!(id in nicks))
         return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
     if (!users[nicks[id]].admin)
-        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
+        return res.status(400).json({nicknameError: 'Ты не админ. Таким сюда низя'});
 
     const nickname = req.body.nickname;
     if (!nickname)
