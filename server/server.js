@@ -31,9 +31,10 @@ const users = {
         quest: undefined,
         branch: undefined,
         progress: 0,
-        rating: 3,
+        rating: 300,
+        admin: true,
     },
-    '.': {
+    /*'.': {
         nickname: '.',
         email: 'nomail@mail.ru',
         password: '.',
@@ -41,7 +42,7 @@ const users = {
         branch: 0,
         progress: 3,
         rating: 0,
-    },
+    },*/
 };
 const nicks = {};
 
@@ -138,7 +139,7 @@ app.post('/api/register', (req, res) => {
         if (userData.email === email)
             return res.status(400).json({emailError: 'На этот email уже зарегистрирован пользователь "' + userData.nickname + '"'});
 
-    users[nickname] = {nickname, password, email, quest: undefined, branch: undefined, progress: 0, rating: 0};
+    users[nickname] = {nickname, password, email, quest: undefined, branch: undefined, progress: 0, rating: 0, admin: false,};
     const id = uuid.v4();
     nicks[id] = nickname;
 
@@ -169,7 +170,7 @@ app.get('/api/me', (req, res) => {
     const id = req.cookies['userId'];
     const nickname = nicks[id];
     if (!nickname || !users[nickname])
-        return res.status(401).json({error: 'Пользователя ' + nickname + ' нет в базе данных.'});
+        return res.status(401).json({error: 'Пользователя ' + nickname + ' нет.'});
 
     const user = {};
     Object.assign(user, users[nickname]);
@@ -211,7 +212,7 @@ app.post('/api/me/change-data', (req, res) => {
         return res.status(400).json({nicknameError: 'Зачем кнопку теребишь, если не поменял ничего?', emailError: ''});
 
     delete users[nicks[id]];
-    users[nickname] = {nickname, prevPassword, email, quest: undefined, branch: undefined, progress: 0, rating: 0}; // create new user
+    users[nickname] = {nickname, prevPassword, email, quest: undefined, branch: undefined, progress: 0, rating: 0, admin: false,}; // create new user
     nicks[id] = nickname;
 
     res.cookie('userId', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
@@ -255,18 +256,10 @@ app.post('/api/me/change-password', (req, res) => {
     res.status(200).end();
 });
 
-app.get('/api/users', (req, res) => {
-    res.status(200).json(users).end();
-});
-
-app.get('/api/quests', (req, res) => {
-    res.status(200).json(quests).end();
-});
-
 app.get('/api/rating', (req, res) => {
     const rates = [];
     for (const [, userData] of Object.entries(users)) {
-        rates.push({nickname: userData.nickname, rating: userData.rating});
+        rates.push({nickname: userData.nickname, rating: userData.progress}); // ----------- !!! PROGRESS BUT NOT RATING !!! ------------
     }
     rates.sort((a, b) => {
         return b.rating - a.rating;
@@ -293,12 +286,116 @@ app.get('/api/quest_bonuspage', (req, res) => {
 
 
 
+app.get('/api/admin', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({nicknameError: 'Не авторизован или сессия устарела. В доступе отказано'});
+    if (!users[nicks[id]].admin)
+        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя. В доступе отказано'});
+
+    res.status(200).end();
+});
+
+app.post('/api/admin/user', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    if (!users[nicks[id]].admin)
+        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
+
+    const nickname = req.body.nickname;
+    if (!nickname)
+        return res.status(400).json({nicknameError: 'Тебе не кажется, что чего-то не хватает?'});
+    if (!users[nickname])
+        return res.status(400).json({nicknameError: 'Такого пользователя нет'});
+
+    res.status(200).json(users[req.body.nickname]).end();
+});
+
+app.get('/api/admin/users', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    if (!users[nicks[id]].admin)
+        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
+
+    res.status(200).json(users).end();
+});
+
+app.get('/api/admin/quests', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    if (!users[nicks[id]].admin)
+        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
+
+    res.status(200).json(quests).end();
+});
+
 app.post('/api/admin/set-answer-all', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    if (!users[nicks[id]].admin)
+        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
+
     answerAll = req.body.answer.split(' ');
     res.status(200).end();
 });
 
+app.post('/api/admin/set-quest', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    if (!users[nicks[id]].admin)
+        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
+
+    const quest = req.body.quest;
+    const nickname = req.body.nickname;
+    if (!nickname)
+        return res.status(400).json({nicknameError: 'Тебе не кажется, что чего-то не хватает?'});
+    if (!quest)
+        return res.status(400).json({questError: 'Тебе не кажется, что чего-то не хватает?'});
+    if (!users[nickname])
+        return res.status(400).json({nicknameError: 'Такого пользователя нет'});
+    if (typeof quests[quest] === "undefined")
+        return res.status(400).json({questError: 'Недопустимое значение'});
+
+    users[nickname].quest = parseInt(quest);
+    res.status(200).end();
+});
+
+app.post('/api/admin/set-branch', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    if (!users[nicks[id]].admin)
+        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
+
+    const branch = req.body.branch;
+    const nickname = req.body.nickname;
+    if (!nickname)
+        return res.status(400).json({nicknameError: 'Тебе не кажется, что чего-то не хватает?'});
+    if (!branch)
+        return res.status(400).json({branchError: 'Тебе не кажется, что чего-то не хватает?'});
+    if (!users[nickname])
+        return res.status(400).json({nicknameError: 'Такого пользователя нет'});
+    if ((typeof users[nickname].quest === "undefined"))
+        return res.status(400).json({nicknameError: 'Пользователь не выбрал квест'});
+    if (typeof quests[users[nickname].quest].branches[branch] === "undefined")
+        return res.status(400).json({branchError: 'Недопустимое значение'});
+
+    users[nickname].branch = parseInt(branch);
+    res.status(200).end();
+});
+
 app.post('/api/admin/set-progress', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    if (!users[nicks[id]].admin)
+        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
+
     const progress = req.body.progress;
     const nickname = req.body.nickname;
     if (!nickname)
@@ -313,6 +410,45 @@ app.post('/api/admin/set-progress', (req, res) => {
         return res.status(400).json({progressError: 'Недопустимое значение'});
 
     users[nickname].progress = parseInt(progress);
+    res.status(200).end();
+});
+
+app.post('/api/admin/set-admin', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    if (!users[nicks[id]].admin)
+        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
+
+    const admin = req.body.admin.toLowerCase();
+    const nickname = req.body.nickname;
+    if (!nickname)
+        return res.status(400).json({nicknameError: 'Тебе не кажется, что чего-то не хватает?'});
+    if (!admin)
+        return res.status(400).json({adminError: 'Тебе не кажется, что чего-то не хватает?'});
+    if (!users[nickname])
+        return res.status(400).json({nicknameError: 'Такого пользователя нет'});
+    if ((admin !== 'true') && (admin !== 'false'))
+        return res.status(400).json({adminError: 'Недопустимое значение'});
+
+    users[nickname].admin = (admin === 'true');
+    res.status(200).end();
+});
+
+app.post('/api/admin/delete-user', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    if (!users[nicks[id]].admin)
+        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
+
+    const nickname = req.body.nickname;
+    if (!nickname)
+        return res.status(400).json({nicknameError: 'Тебе не кажется, что чего-то не хватает?'});
+    if (!users[nickname])
+        return res.status(400).json({nicknameError: 'Такого пользователя нет'});
+
+    delete users[nickname];
     res.status(200).end();
 });
 
