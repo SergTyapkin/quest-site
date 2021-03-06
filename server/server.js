@@ -104,7 +104,7 @@ app.post('/api/play', (req, res) => {
     res.status(200).end();
 });
 
-app.get('/api/quests', (req, res) => {
+app.get('/api/quest', (req, res) => {
     const questTitles = [];
     for (const quest of quests)
         questTitles.push(quest.title)
@@ -365,7 +365,7 @@ app.get('/api/admin/quests', (req, res) => {
 app.post('/api/admin/set-answer-all', (req, res) => {
     const id = req.cookies['userId'];
     if (!(id in nicks))
-        return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+        return res.status(400).json({nicknameError: 'Не авторизован или сессия устарела.'});
     if (!users[nicks[id]].admin)
         return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
 
