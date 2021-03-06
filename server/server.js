@@ -362,17 +362,6 @@ app.get('/api/admin/quests', (req, res) => {
     res.status(200).json(quests).end();
 });
 
-app.post('/api/admin/set-answer-all', (req, res) => {
-    const id = req.cookies['userId'];
-    if (!(id in nicks))
-        return res.status(400).json({nicknameError: 'Не авторизован или сессия устарела.'});
-    if (!users[nicks[id]].admin)
-        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
-
-    answerAll = req.body.answer.split(' ');
-    res.status(200).end();
-});
-
 app.post('/api/admin/set-quest', (req, res) => {
     const id = req.cookies['userId'];
     if (!(id in nicks))
@@ -440,6 +429,28 @@ app.post('/api/admin/set-progress', (req, res) => {
         return res.status(400).json({progressError: 'Недопустимое значение'});
 
     users[nickname].progress = parseInt(progress);
+    res.status(200).end();
+});
+
+app.post('/api/admin/set-isfoundbonus', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({nicknameError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    if (!users[nicks[id]].admin)
+        return res.status(400).json({nicknameError: 'Вы не админ. Таким сюда низя'});
+
+    const isFoundBonus = req.body.isFoundBonus.toLowerCase();
+    const nickname = req.body.nickname;
+    if (!nickname)
+        return res.status(400).json({nicknameError: 'Тебе не кажется, что чего-то не хватает?'});
+    if (!isFoundBonus)
+        return res.status(400).json({isFoundBonusError: 'Тебе не кажется, что чего-то не хватает?'});
+    if (!users[nickname])
+        return res.status(400).json({nicknameError: 'Такого пользователя нет'});
+    if ((isFoundBonus !== 'true') && (isFoundBonus !== 'false'))
+        return res.status(400).json({isFoundBonusError: 'Недопустимое значение'});
+
+    users[nickname].isFoundBonus = (isFoundBonus === 'true');
     res.status(200).end();
 });
 

@@ -77,6 +77,24 @@ const html = `
         </div>
     </form>
     
+    <form id="isFoundBonus-form" style="margin-top: 60px">
+        <div class="center">
+            <div class="title">Сменить нашёл ли бонус</div>
+        </div>
+        <div class="text">
+            <div class="error" id="isFoundBonus-nicknameError"></div>
+            <div class="mtb20"><input class="fullwidth p10" type="text"  id="isFoundBonus-nickname-form" placeholder="Никнейм"></div>
+        </div>
+        <div class="text">
+            <div class="error" id="isFoundBonus-isFoundBonusError"></div>
+            <div class="mtb20"><input class="fullwidth p10" type="text"  id="isFoundBonus-isFoundBonus-form" placeholder="false / true"></div>
+        </div>
+        <div class="text">
+            <div class="success" id="isFoundBonus-completeChange"></div>
+            <div class="mtb20"><input class="submit fullwidth center p10" style="border-color: #b08946; outline: none" type="submit" value="Изменить"></div>
+        </div>
+    </form>
+    
     <form id="admin-form" style="margin-top: 60px">
         <div class="center">
             <div class="title">Сменить права админа</div>
@@ -155,12 +173,14 @@ export function source(element, router) {
                 document.getElementById("quest-nickname-form").value = response.nickname;
                 document.getElementById("branch-nickname-form").value = response.nickname;
                 document.getElementById("progress-nickname-form").value = response.nickname;
+                document.getElementById("isFoundBonus-nickname-form").value = response.nickname;
                 document.getElementById("admin-nickname-form").value = response.nickname;
                 //document.getElementById("delete-nickname-form").value = response.nickname;
 
                 document.getElementById("quest-quest-form").value = response.quest;
                 document.getElementById("branch-branch-form").value = response.branch;
                 document.getElementById("progress-progress-form").value = response.progress;
+                document.getElementById("isFoundBonus-isFoundBonus-form").value = response.isFoundBonus;
                 document.getElementById("admin-admin-form").value = response.admin;
             } else { // invalide
                 if (response.nicknameError)
@@ -220,6 +240,23 @@ export function source(element, router) {
         });
     });
 
+    document.getElementById("isFoundBonus-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const nickname = document.getElementById("isFoundBonus-nickname-form").value.trim();
+        const isFoundBonus = document.getElementById("isFoundBonus-isFoundBonus-form").value.trim();
+
+        ajax("POST", "/api/admin/set-isfoundbonus", {nickname, isFoundBonus}, (status, response) => {
+            if (status == 200) { // valide
+                document.getElementById("isFoundBonus-completeChange").innerText = "Успешно изменено";
+            } else { // invalide
+                if (response.nicknameError)
+                    document.getElementById("isFoundBonus-nicknameError").innerText = response.nicknameError;
+                if (response.isFoundBonusError)
+                    document.getElementById("isFoundBonus-isFoundBonusError").innerText = response.isFoundBonusError;
+            }
+        });
+    });
+    
     document.getElementById("admin-form").addEventListener("submit", (event) => {
         event.preventDefault();
         const nickname = document.getElementById("admin-nickname-form").value.trim();
@@ -247,19 +284,6 @@ export function source(element, router) {
             } else { // invalide
                 if (response.nicknameError)
                     document.getElementById("delete-nicknameError").innerText = response.nicknameError;
-            }
-        });
-    });
-
-    document.getElementById("answerAll-form").addEventListener("submit", (event) => {
-        event.preventDefault();
-        const answer = document.getElementById("answerAll-answer-form").value.trim();
-
-        ajax("POST", "/api/admin/set-answer-all", {answer}, (status, response) => {
-            if (status == 200) { // valide
-                document.getElementById("answerAll-completeChange").innerText = "Успешно изменено";
-            } else { // invalide
-                document.getElementById("answerAll-nicknameError").innerText = "Что-то пошло не так";
             }
         });
     });
