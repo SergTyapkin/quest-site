@@ -15,7 +15,11 @@ export function render(target, path, router, callback) {
         body.style.opacity = "0%";
         //document.querySelector("body").style.backgroundPosition = `${Math.floor(35 + Math.random()*20)}%`; // random from 35% to 55%
         setTimeout(() => {
-            eval(path.substring(1)).source(body, router);
+            try {
+                eval(path.substring(1)).source(body, router);
+            } catch {
+                router.goto("/about");
+            }
             body.style.opacity = "100%";
             callback();
         }, 200);
