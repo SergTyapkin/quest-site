@@ -1,7 +1,10 @@
 'use strict';
 
-const bumonka = require("./quests/8 марта. Бауманка.js");
-const testQuest = require("./quests/Тестовый квест.js");
+const bumonka1 = require("./quests/8 марта. Бауманка РК6-41Б.js");
+const bumonka3 = require("./quests/8 марта. Бауманка РК6-43Б.js");
+const bumonka4 = require("./quests/8 марта. Бауманка РК6-44Б.js");
+const bumonka5 = require("./quests/8 марта. Бауманка РК6-45Б.js");
+const bumonka6 = require("./quests/8 марта. Бауманка РК6-46Б.js");
 
 const express = require('express');
 //const https = require( "https" ); // для организации https
@@ -17,11 +20,12 @@ app.use(morgan('dev'));
 app.use(body.json());
 app.use(cookie());
 
-let answerAll = ['Nothing1', 'Nothing2', 'Nothing3'];
-
 const quests = [
-    bumonka.quest,
-    testQuest.quest,
+    bumonka1.quest,
+    bumonka3.quest,
+    bumonka4.quest,
+    bumonka5.quest,
+    bumonka6.quest,
 ];
 
 const users = {
@@ -33,6 +37,7 @@ const users = {
         branch: undefined,
         progress: 0,
         rating: 300,
+        isFoundBonus: false,
         admin: true,
     },
     /*'.': {
@@ -43,6 +48,8 @@ const users = {
         branch: 0,
         progress: 3,
         rating: 0,
+        isFoundBonus: false,
+        admin: true,
     },*/
 };
 const nicks = {};
@@ -63,7 +70,6 @@ app.get('/api/play', (req, res) => {
     if (!(id in nicks))
         return res.status(400).json({answerError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
     const user = users[nicks[id]];
-    console.log(user);
 
     if ((typeof user.quest === "undefined") || (typeof user.branch === "undefined"))
         return res.status(401).json({answerError: 'Квест не выбран.'});
@@ -98,7 +104,7 @@ app.post('/api/play', (req, res) => {
     res.status(200).end();
 });
 
-app.get('/api/quest', (req, res) => {
+app.get('/api/quests', (req, res) => {
     const questTitles = [];
     for (const quest of quests)
         questTitles.push(quest.title)
@@ -123,8 +129,7 @@ app.post('/api/quest', (req, res) => {
     user.quest = req.body.questId;
     user.branch = req.body.branchId;
     user.progress = 0;
-
-    console.log(user);
+    user.isFoundBonus = false;
 
     res.status(200).end();
 });
@@ -157,7 +162,7 @@ app.post('/api/register', (req, res) => {
         if (userData.email === email)
             return res.status(400).json({emailError: 'На этот email уже зарегистрирован пользователь "' + userData.nickname + '"'});
 
-    users[nickname] = {nickname, password, email, quest: undefined, branch: undefined, progress: 0, rating: 0, admin: false,};
+    users[nickname] = {nickname, password, email, quest: undefined, branch: undefined, progress: 0, rating: 0, isFoundBonus: false, admin: false,};
     const id = uuid.v4();
     nicks[id] = nickname;
 
@@ -234,7 +239,7 @@ app.post('/api/me/change-data', (req, res) => {
         return res.status(400).json({nicknameError: 'Зачем кнопку теребишь, если не поменял ничего?', emailError: ''});
 
     delete users[nicks[id]];
-    users[nickname] = {nickname, prevPassword, email, quest: undefined, branch: undefined, progress: 0, rating: 0, admin: false,}; // create new user
+    users[nickname] = {nickname, prevPassword, email, quest: undefined, branch: undefined, progress: 0, rating: 0, isFoundBonus: false, admin: false,}; // create new user
     nicks[id] = nickname;
 
     res.cookie('userId', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
@@ -283,7 +288,7 @@ app.post('/api/me/change-password', (req, res) => {
 app.get('/api/rating', (req, res) => {
     const rates = [];
     for (const [, userData] of Object.entries(users)) {
-        rates.push({nickname: userData.nickname, rating: userData.progress}); // ----------- !!! PROGRESS BUT NOT RATING !!! ------------
+        rates.push({nickname: userData.nickname, rating: userData.progress, isFoundBonus: userData.isFoundBonus}); // ----------- !!! PROGRESS BUT NOT RATING !!! ------------
     }
     rates.sort((a, b) => {
         return b.rating - a.rating;
@@ -299,12 +304,13 @@ app.get('/api/quest_bonuspage', (req, res) => {
     const user = users[nicks[id]];
 
     if ((typeof user.quest === "undefined") || (typeof user.branch === "undefined"))
-        return res.status(400).json({error: 'Бонус-страница недоступна, ведь выбрана ветка'});
+        return res.status(400).json({error: 'Бонус-страница недоступна, ведь не выбрана ветка'});
 
     if (user.progress + 1 < quests[user.quest].branches[user.branch].tasks.length)
         return res.status(400).json({error: 'Бонус-страница недоступна, ведь ветка ещё не пройдена до конца'});
 
-    res.status(200).json({title: "Последний этап пройден!", description: 'Ты получил ответ: ' + answerAll[user.branch] + '. Возможно, вместе с другими ветками вы сможете достичь большего'}).end();
+    user.isFoundBonus = true;
+    res.status(200).json(quests[user.quest].branches[user.branch].bonus).end();
 });
 
 

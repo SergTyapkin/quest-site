@@ -24,11 +24,14 @@ export function source(element, router) {
     ajax('GET', '/api/rating', null, (status, response) => {
         const listing = document.getElementById("users-listing");
         response.users.forEach((user) => {
-            console.log(user);
+            let addText = '';
+            if (user.isFoundBonus)
+                addText = '+';
+
             listing.innerHTML += `<div class="fullwidth left-item text-big listing-item p20" style="display: block">
                                       <span style="width: 50px">${user.nickname}</span>
                                       <span class="title choose" style="margin: 0 30px"><arrow class="arrow right" style="margin-left: 10px; display: inline-block;"></arrow>
-                                          ${user.rating}
+                                          ${user.rating} ${addText}
                                       </span>
                                   </div>`;
         });
