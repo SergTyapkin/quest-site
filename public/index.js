@@ -5,13 +5,17 @@ const router = new Router();
 
 ajax("GET", "/api/me", {}, (status, response) => {
     if (status == 200) { // valide
-        document.getElementById("nickname").innerText = response.nickname;
-        document.getElementById("me/login-button").setAttribute('href', '/me');
+        document.getElementById("nickname-button").innerText = response.nickname;
+        document.getElementById("nickname-button").setAttribute('href', '/me');
         document.getElementById("progressbar").style.backgroundPositionX = `${100 - 100 / response.len * response.progress}%`;
         document.getElementById("progress").innerText = response.progress;
     } else { // invalide
         document.getElementById("progressbar").style.backgroundPositionX = "100%";
-        document.getElementById("me/login-button").setAttribute('href', '/login');
+        document.getElementById("nickname-button").setAttribute('href', '/login');
     }
-    router.goto("/about");
+    if (location.pathname === '/') {
+        router.goto('/about');
+    } else {
+        router.goto(location.pathname);
+    }
 });

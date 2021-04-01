@@ -16,11 +16,11 @@ const html = `
     </div>
     <form id="form-data">
         <div class="mtb20">
-            <div><label class="text-big" style="font-family: Arial">ЛОГИН <span class="error" id="nicknameError"></span></label></div>
+            <div><label class="text-big" style="font-family: Arial">ТВОЙ ЛОГИН <span class="error" id="nicknameError"></span></label></div>
             <input class="fullwidth p10" type="text"  id="nickname-form">
         </div>
         <div class="mtb20">
-            <div><label class="text-big" style="font-family: Arial">E-mail <span class="error" id="emailError"></span></label></div>
+            <div><label class="text-big" style="font-family: Arial">ТВОЙ E-mail <span class="error" id="emailError"></span></label></div>
             <input class="fullwidth p10" type="text" id="email-form">
             <div class="text-small" style="padding: 5px 0 5px 0">Подтверждать придётся и со старой, и с новой</div>
         </div>
@@ -31,7 +31,7 @@ const html = `
     </form>
     <form id="form-password">
         <div>
-            <div><label class="text-big" style="font-family: Arial">ПАРОЛЬ <span class="error" id="passwordError"></span></label></div>
+            <div><label class="text-big" style="font-family: Arial">СМЕНИТЬ ПАРОЛЬ <span class="error" id="passwordError"></span></label></div>
             <input class="p10" style="width: 78%; display: inline"" type="password" id="password-form" placeholder="Старый пароль">
             <input class="submit p10" style="width: 20%; font-size: 1em; color: #deb77a; display: inline" type="submit" value="Сменить" id="button-password-form">
         </div>
