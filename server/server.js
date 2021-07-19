@@ -1,12 +1,15 @@
 'use strict';
 
 const bumonka = require("./quests/Квест по бауманке.js");
+const butovoNaikitas = require("./quests/Квест по Бутово (ДР Никиты 2021).js");
 
-/*const bumonka1 = require("./quests/8 марта. Бауманка РК6-41Б.js");
+/*
+const bumonka1 = require("./quests/8 марта. Бауманка РК6-41Б.js");
 const bumonka3 = require("./quests/8 марта. Бауманка РК6-43Б.js");
 const bumonka4 = require("./quests/8 марта. Бауманка РК6-44Б.js");
 const bumonka5 = require("./quests/8 марта. Бауманка РК6-45Б.js");
-const bumonka6 = require("./quests/8 марта. Бауманка РК6-46Б.js");*/
+const bumonka6 = require("./quests/8 марта. Бауманка РК6-46Б.js");
+*/
 
 const express = require('express');
 //const https = require( "https" ); // для организации https
@@ -24,14 +27,17 @@ app.use(cookie());
 
 const quests = [
     bumonka.quest,
-    /*bumonka1.quest,
+    butovoNaikitas.quest,
+    /*
+    bumonka1.quest,
     bumonka3.quest,
     bumonka4.quest,
     bumonka5.quest,
-    bumonka6.quest,*/
+    bumonka6.quest,
+    */
 ];
 
-const users = {"123":{"nickname":"123","password":"qazw","email":"andrew.khmel@gmail.com","progress":0,"rating":0,"isFoundBonus":false,"admin":false},"TyapkinS":{"nickname":"TyapkinS","email":"sererga115@gmail.com","password":"password","quest":"0","branch":"0","progress":0,"rating":305,"isFoundBonus":false,"admin":true},"cezarus":{"nickname":"cezarus","password":"1234","email":"cezarus1337@gmail.com","quest":"0","branch":"2","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"dishulka":{"nickname":"dishulka","password":"dish0311","email":"dishulka@mail.ru","quest":"4","branch":"2","progress":1,"rating":4,"isFoundBonus":false,"admin":false},"alsh":{"nickname":"alsh","password":"Qwerty1941","email":"alinashikova5@gmail.com","quest":"2","branch":"0","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"TyapkinSergey":{"nickname":"TyapkinSergey","password":"password","email":"tyapkin2002@mail.ru","quest":"0","branch":"1","progress":0,"rating":0,"isFoundBonus":false,"admin":false},"Reflect_doll":{"nickname":"Reflect_doll","password":"Ljxtymrf2001","email":"animeshka-78@mail.ru","quest":"0","branch":"2","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"Pompudi":{"nickname":"Pompudi","password":"56rofipe","email":"milena28112001@gmail.com","quest":"3","branch":"1","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"mileno4ka":{"nickname":"mileno4ka","password":"2x2budethui","email":"mmileno4ka4@gmail.com","quest":"2","branch":"1","progress":2,"rating":2,"isFoundBonus":false,"admin":false},"zorkostreis":{"nickname":"zorkostreis","password":"uzaguf65","email":"zorkostreis@gmail.com","quest":"2","branch":"1","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"Olga_Golovleva":{"nickname":"Olga_Golovleva","password":"cfwp4505","email":"golowleva.ol@yandex.ru","quest":"3","branch":"2","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"love_bmstu":{"nickname":"love_bmstu","password":"beer","email":"polina.kychakova@outlook.com","quest":"4","branch":"1","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"Crybaby":{"nickname":"Crybaby","password":"daradarkness","email":"lostdoff@yandex.ru","quest":"1","branch":"1","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"yuimarvel":{"nickname":"yuimarvel","password":"Asdfg123","email":"yuimarvel@icloud.com","quest":"1","branch":"0","progress":0,"rating":1,"isFoundBonus":false,"admin":false},"DaschaM":{"nickname":"DaschaM","password":"Darena2001","email":"m2643870@ya.ru","quest":"1","branch":"0","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"Sanchez":{"nickname":"Sanchez","password":"qwertyuiop","email":"erofeev.alex1337@yandex.ru","progress":0,"rating":0,"isFoundBonus":false,"admin":false},"Danya":{"nickname":"Danya","password":"qwerty","email":"seryoga@dayadmina.ru","progress":0,"rating":0,"isFoundBonus":false,"admin":true},"Mary2":{"nickname":"Mary2","password":"12345","email":"a@g.m","progress":0,"rating":0,"isFoundBonus":false,"admin":false},"mikkelyangelo":{"nickname":"mikkelyangelo","password":"Restart1","email":"michailmudr@mail.ru","progress":0,"rating":0,"isFoundBonus":false,"admin":true},"kirill":{"nickname":"kirill","password":"1111","email":"dnr407@yandex.ru","quest":"1","branch":"0","progress":0,"rating":0,"isFoundBonus":false,"admin":false},"Wolf":{"nickname":"Wolf","password":"qwer123","email":"wolf@wolf.wolf","progress":0,"rating":0,"isFoundBonus":false,"admin":false},"Shadina":{"nickname":"Shadina","password":"s260701d","email":"shabalina_diana@mail.ru","quest":"2","branch":"0","progress":1,"rating":1,"isFoundBonus":false,"admin":false}};
+const users = {"Naikitas":{"nickname":"Naikitas","password":".","progress":0,"rating":0,"isFoundBonus":false,"admin":false},"TyapkinS":{"nickname":"TyapkinS","email":"sererga115@gmail.com","password":"password","quest":"0","branch":"0","progress":0,"rating":305,"isFoundBonus":false,"admin":true},"cezarus":{"nickname":"cezarus","password":"1234","email":"cezarus1337@gmail.com","quest":"0","branch":"2","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"dishulka":{"nickname":"dishulka","password":"dish0311","email":"dishulka@mail.ru","quest":"4","branch":"2","progress":1,"rating":4,"isFoundBonus":false,"admin":false},"alsh":{"nickname":"alsh","password":"Qwerty1941","email":"alinashikova5@gmail.com","quest":"2","branch":"0","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"TyapkinSergey":{"nickname":"TyapkinSergey","password":"password","email":"tyapkin2002@mail.ru","quest":"0","branch":"1","progress":0,"rating":0,"isFoundBonus":false,"admin":false},"Reflect_doll":{"nickname":"Reflect_doll","password":"Ljxtymrf2001","email":"animeshka-78@mail.ru","quest":"0","branch":"2","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"Pompudi":{"nickname":"Pompudi","password":"56rofipe","email":"milena28112001@gmail.com","quest":"3","branch":"1","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"mileno4ka":{"nickname":"mileno4ka","password":"2x2budethui","email":"mmileno4ka4@gmail.com","quest":"2","branch":"1","progress":2,"rating":2,"isFoundBonus":false,"admin":false},"zorkostreis":{"nickname":"zorkostreis","password":"uzaguf65","email":"zorkostreis@gmail.com","quest":"2","branch":"1","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"Olga_Golovleva":{"nickname":"Olga_Golovleva","password":"cfwp4505","email":"golowleva.ol@yandex.ru","quest":"3","branch":"2","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"love_bmstu":{"nickname":"love_bmstu","password":"beer","email":"polina.kychakova@outlook.com","quest":"4","branch":"1","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"Crybaby":{"nickname":"Crybaby","password":"daradarkness","email":"lostdoff@yandex.ru","quest":"1","branch":"1","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"yuimarvel":{"nickname":"yuimarvel","password":"Asdfg123","email":"yuimarvel@icloud.com","quest":"1","branch":"0","progress":0,"rating":1,"isFoundBonus":false,"admin":false},"DaschaM":{"nickname":"DaschaM","password":"Darena2001","email":"m2643870@ya.ru","quest":"1","branch":"0","progress":1,"rating":1,"isFoundBonus":false,"admin":false},"Sanchez":{"nickname":"Sanchez","password":"qwertyuiop","email":"erofeev.alex1337@yandex.ru","progress":0,"rating":0,"isFoundBonus":false,"admin":false},"Danya":{"nickname":"Danya","password":"qwerty","email":"seryoga@dayadmina.ru","progress":0,"rating":0,"isFoundBonus":false,"admin":true},"Mary2":{"nickname":"Mary2","password":"12345","email":"a@g.m","progress":0,"rating":0,"isFoundBonus":false,"admin":false},"mikkelyangelo":{"nickname":"mikkelyangelo","password":"Restart1","email":"michailmudr@mail.ru","progress":0,"rating":0,"isFoundBonus":false,"admin":true},"kirill":{"nickname":"kirill","password":"1111","email":"dnr407@yandex.ru","quest":"1","branch":"0","progress":0,"rating":0,"isFoundBonus":false,"admin":false},"Wolf":{"nickname":"Wolf","password":"qwer123","email":"wolf@wolf.wolf","progress":0,"rating":0,"isFoundBonus":false,"admin":false},"Shadina":{"nickname":"Shadina","password":"s260701d","email":"shabalina_diana@mail.ru","quest":"2","branch":"0","progress":1,"rating":1,"isFoundBonus":false,"admin":false}};
 const nicks = {};
 
 
@@ -75,9 +81,15 @@ app.post('/api/play', (req, res) => {
 });
 
 app.get('/api/quest', (req, res) => {
+    const id = req.cookies['userId'];
+    if (!(id in nicks))
+        return res.status(400).json({answerError: 'Сессия устарела, и ты теперь не вошёл в аккаунт.'});
+    const user = users[nicks[id]];
+
     const questTitles = [];
     for (const quest of quests)
-        questTitles.push(quest.title)
+        if (!quest.users || (user in quest.users) || user.admin)
+            questTitles.push(quest.title)
 
     res.status(200).json(questTitles);
 });
